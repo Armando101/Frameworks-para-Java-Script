@@ -1,0 +1,39 @@
+Crear un proyecto con node JS
+	
+	Ejecutar en la línea de comandos:
+		- npm init
+	
+	Nos preguntará algunas cosas, como descripción, versión, autor, etc.
+	
+	
+Instalación de dependencias
+	Tenemos que estar dentro del proyecto.
+	Para este caso no usaremos demasiadas dependencias.
+
+	* Express: framework que nos permite trabajar con el protocolo http. Nos permitirá recibir peticiones https y contestarlas.
+		- npm install --save express
+	
+	* body parser: cuando yo envíe un formulario con postman converirá los datos en un json, recibe una petición http y los parámetros los convierte en objeto JSON.
+		- npm install --save body-parser
+	
+	* mongoose: ORM para utilizar con mongodb, nos proporciona una capa de abstracción para trabajar con diferntes modelos. Nos da métodos para hacerconsultas a la base de datos
+		- npm install --save mongoose
+	
+	* connect multiparty: nos permite trabajar con archivos.
+		- npm install --save connect-multiparty
+	
+	* validator: validar información, que contenga las caraterísticas deseadas para guardarlo en la base de datos.
+		- npm install --save validator
+	
+
+	* nodemon: permite resetear el servidor cuando yo hago un cambio en el código, este paquete sólo lo usaremos en la fase de desarrollo.
+		- npm install --save-dev nodemon
+
+	En el archivo package.json indicamos que el nodemon trabajará con el archivo index.js
+			  "scripts": {
+				"start": "nodemon index.js"
+				"test": "echo \"Error: no test specified\" && exit 1"
+
+
+	Ahora para ejectar el servidor ejecutamos:
+		- npm start
