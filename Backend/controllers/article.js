@@ -6,6 +6,8 @@
 var validator = require('validator');
 // Importamos el módulo donde se encuentra el modelo de los artículos
 var Article = require('../models/article');
+var fs = require('fs');
+var path = require('path');
 
 // Declaramos una variable que tendrá los métodos o rutas
 var controller = {
@@ -239,8 +241,67 @@ var controller = {
 			});
 
 		});
-	}
+	},
 
+	// Método para subir archivos
+	upload: (req, res) => {
+		// Configurar el módulo connect multiparty router/article.js
+			// Esto se hizo en el archivo routes/articles.js
+			// Se agregó multiparty y se ejecutó un midleware
+
+		// Recoger el fichero de la petición
+		var file_name = 'imagen no subida';
+
+		if (!req.files) {
+			return res.status(404).send({
+				status: 'error',
+				message: file_name
+			});
+		}
+
+		// Conseguir nombre y extensión del archivo
+		var file_path = req.files.file0.path
+		var file_split = file_path.split('/')
+
+		// Nombre del archivo
+		var file_name = file_split[2];
+
+		// Extensión del fichero
+		var extension_split = file_name.split('.');
+		var file_ext = extension_split[1];
+
+		// Comprobar la extensión, sólo imágenes. Si no es válida borra el fichero
+		if (file_ext != 'png' && file_ext != 'jpg' && file_ext != 'jpeg' && file_ext != 'gif') {
+			// borrar el archivo subido
+			fs.unlink(file_path, (err) => {
+				return res.status(200).send({
+					status: 'error',
+					message: 'La extensión de la imagen no es válida'
+				});
+			});
+
+		} else {
+			// Si todo es válido, saco el id de la url
+			var article_id = req.params.id;
+
+			// Busca el artículo
+			Article.findOneAndUpdate({_id:article_id}, {image: file_name}, {new:true}, (err, articleUpdate) =>{
+				
+				if (err || !articleUpdate) {
+					return res.status(200).send({
+						status: 'succes',
+						message: 'Error al subir el archivo'
+					})
+				}
+
+				return res.status(200).send({
+					status: 'succes',
+					article: articleUpdate
+				});
+			});
+		}
+	}
+	
 }; // end controller
 
 // Exportamos los controladores para usarlos en routers/article.js
