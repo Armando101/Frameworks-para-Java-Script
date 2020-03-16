@@ -10,13 +10,13 @@ var schema = mongoose.Schema; // Propiedad para crear los modelos
 
 // Declaramos el modelo junto con sus atributos
 var article_schema = schema({
-	titulo: String,
+	title: String,
 	content: String,
 	date: { type: Date, default: Date.now },
 	image: String
 });
 
-// Para usar el modelo necesitamos exportarlo
+// Exportamos el módulo para usarlo en contellers/article.js que es donde crearemos los articulos
 // model(nombreDelModelo, queEsquemaUtilizar)
 module.exports = mongoose.model('Article', article_schema);
 
