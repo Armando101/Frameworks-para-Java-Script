@@ -32,6 +32,8 @@ router.get('/article/:id', article_controller.getArticle);
 router.put('/article/:id', article_controller.update);
 router.delete('/article/:id', article_controller.delete);
 router.post('/upload-image/:id', md_upload, article_controller.upload);
+router.get('/get-image/:image', article_controller.getImage);
+router.get('/search/:search', article_controller.search);
 
 // Finalemente las exporto para utilizarlas en app.js
 module.exports = router;

@@ -6,8 +6,8 @@
 var validator = require('validator');
 // Importamos el módulo donde se encuentra el modelo de los artículos
 var Article = require('../models/article');
-var fs = require('fs');
-var path = require('path');
+var fs = require('fs'); // fileSystem nos permitirá eliminar archivos
+var path = require('path'); // Nos permite obtener la ruta de un arcivo en el servidor
 
 // Declaramos una variable que tendrá los métodos o rutas
 var controller = {
@@ -300,6 +300,60 @@ var controller = {
 				});
 			});
 		}
+	},
+
+	getImage: (req, res) => {
+		// Sacar el fichero que llega por la url
+		var file = req.params.image;
+
+		// Sacar el path
+		var path_file = './upload/articles/'+file
+
+		// Comprobamos si el archivo existe
+		fs.exists(path_file, (exists) => {
+
+			if (exists)
+				return res.sendFile(path.resolve(path_file));
+			else {	
+				return res.status(404).send({
+					status: 'error',
+					message: 'La imagen no existe'
+				});
+			}
+		});
+	},
+
+	search: (req, res) => {
+		// Sacar el string a buscar
+		var search_string = req.params.search;
+
+		// Find or
+		// Busca todos los search_string que estén contenidos en title o en content
+		Article.find({ "$or": [
+			{"title": {"$regex":search_string, "$options": "i"}},
+			{"content": {"$regex":search_string, "$options": "i"}}
+		]})
+		.sort([['date', 'descending']])
+		.exec((err, articles) => {
+			if (err) {
+				return res.status(500).send({
+					status: 'error',
+					message:'Error en la petición'
+				});				
+			}
+
+			if (!articles || articles.length <= 0) {
+				return res.status(404).send({
+					status: 'error',
+					message:'No hay artículos que coincidan con tu búsqueda'
+				});				
+			}
+
+			return res.status(200).send({
+				status: 'succes',
+				articles
+			});			
+		});
 	}
 	
 }; // end controller
