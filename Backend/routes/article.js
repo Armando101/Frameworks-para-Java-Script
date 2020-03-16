@@ -19,9 +19,13 @@ router.post('/datos-curso', article_controller.datos_curso);
 // Rutas útiles
 // :last? es un parámetro opcional que nos permite obtener los últimos 5 artículos
 // Ejemplo de petición localhost:3900/api/articles/1
+// El método PUT se usa para actualizar
 router.post('/save', article_controller.save);
 router.get('/articles/:last?', article_controller.getArticles);
 router.get('/article/:id', article_controller.getArticle);
+router.put('/article/:id', article_controller.update);
+router.delete('/article/:id', article_controller.delete);
+
 
 // Finalemente las exporto para utilizarlas en app.js
 module.exports = router;

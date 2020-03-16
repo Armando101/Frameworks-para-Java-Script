@@ -155,6 +155,90 @@ var controller = {
 				article
 			});		
 		});
+	},
+
+	// Método para actualizar datos
+	update: (req, res) => {
+		// Recoger el id del artículo por la url (GET)
+		var article_id = req.params.id;
+
+		// Recoger los datos que llegan por PUT (POST)
+		var params = req.body;
+
+		// Validar datos
+		try  {
+			var validate_title = !validator.isEmpty(params.title);
+			var validate_content = !validator.isEmpty(params.content);
+		}catch(err) {
+			return res.status(404).send({
+				status: 'error',
+				message: 'Faltan datos por enviar !!!'
+			});
+		}
+
+		// Si se validó correctamente
+		if(validate_title && validate_content) {
+			// Find and update
+			
+			// Utilizo el modelo (Article)
+			// Actualiza los únicamente los parámetros que tengo definidos
+			// {new:true} indico que muestre el articulo nuevo (actualizado)
+			Article.findOneAndUpdate({_id: article_id}, params, {new:true}, (err, articleUpdate)=> {
+				if (err) {
+					return res.status(500).send({
+						status: 'error',
+						message: 'Error al actualizar'
+					});
+				}
+				
+				if (!articleUpdate) {
+					return res.status(404).send({
+						status: 'error',
+						message: 'No se encontró el artículo'
+					});
+				}
+
+				return res.status(200).send({
+					status: 'succes',
+					article: articleUpdate
+				});
+			});
+
+		// Si hubo un error en la validación
+		} else {
+			return res.status(404).send({
+				status: 'error',
+				message: 'Validación incorrecta'
+			});
+		}
+	},
+
+	delete: (req, res) => {
+		// Recoger el id de la URL
+		var article_id = req.params.id;
+
+		// Find and delete
+		Article.findOneAndDelete({_id: article_id}, (err, articleRemoved) => {
+			if(err) {
+				return res.status(500).send({
+					status: 'error',
+					message: 'Error al borrar !!!'
+				});
+			}
+
+			if (!articleRemoved) {
+				return res.status(404).send({
+					status: 'error',
+					message: 'No se ha borrar el articulo, posiblemente no existe'
+				});
+			}
+
+			return res.status(200).send({
+				status: 'succes',
+				article: articleRemoved
+			});
+
+		});
 	}
 
 }; // end controller
