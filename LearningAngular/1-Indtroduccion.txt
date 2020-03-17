@@ -54,3 +54,12 @@ Antes de instalar Angular
 	Arrancamos el proyecto
 	- Ingressamos a la carpeta creada y ejecutamos:
 	- ng serve
+
+	Múltiples componentes.
+	- Ejecutar el comando:
+	- ng g component directorio/nombre_componente
+	Ejemplo:
+	- ng g component components/peliculas
+
+Hooks
+	Son eventos que se ejecutan en un momento dado en cierto estado de un componente.

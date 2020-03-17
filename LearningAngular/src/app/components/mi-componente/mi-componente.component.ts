@@ -9,11 +9,7 @@ import { Component } from '@angular/core';
 	// template: Utilizamos comillas invertidas e introducimos el HTML
 @Component({
 	selector: 'mi-componente',
-	template: `
-		<h1>{{ titulo }}</h1>
-		<h2>{{ year }}</h2>
-		<p>{{ comentario }}</p>
-	`
+	templateUrl: './mi-componente.component.html'
 })
 
 // Exportamos el componente
