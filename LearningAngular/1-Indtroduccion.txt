@@ -35,9 +35,9 @@ Antes de instalar Angular
 
 	Desactiva la auditoria para evitar que revise si son seguras las descargas
 	- sudo npm set audit false
-	
+
 	Desactiva versiones anteriores del CLI
-	- sudo npm uninstall -g angular-cli 
+	- sudo npm uninstall -g angular-cli
 	- sudo npm uninstall -g @angular-cli
 
 	Volvemos a Borrar la caché
@@ -63,3 +63,8 @@ Antes de instalar Angular
 
 Hooks
 	Son eventos que se ejecutan en un momento dado en cierto estado de un componente.
+
+Cargar css
+	Vamos al archivo angulas.json y en el apartado de styles agregamos la ruta de nuestro css junto con la que ya está por defecto
+	Es buena práctica crear esta hoja de estilos dentro de una carpeta llamada css que a su vez está dentro de assets
+	- "src/assets/css/style.css"
