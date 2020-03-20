@@ -33,6 +33,19 @@
     <span class="date">
       Hace 5 minutos
     </span>
+
+<!-- Esta es una forma de incluir estilos -->
+    <!-- <span class="year" [class.year-red-one]="pelicula.year > 2016"
+                      [class.year-red-two]="pelicula.year < 2016"> -->
+
+      <!-- Esta es otra -->
+      <span class="year" [ngClass]="{
+                            'year-red-one': pelicula.year > 2016,
+                            'year-red-two': pelicula.year < 2016
+                          }">
+      {{pelicula.year}}
+    </span>
+
     <a href="#">Leer más</a>
     <div class="clearfix"></div>
   </article>

@@ -87,6 +87,24 @@ body {
   margin-right: 15px;
 }
 
+.year-red-one {
+  display: block;
+  background: rgb(189, 64, 64);
+  color: white;
+  padding: 5px;
+  width: 50px;
+  text-align: center;
+}
+
+.year-color-two {
+  display: block;
+  background: rgb(189, 64, 64);
+  color: white;
+  padding: 5px;
+  width: 100px;
+  text-align: center;
+}
+
 #menu a {
   text-decoration: none;
   color: #444;

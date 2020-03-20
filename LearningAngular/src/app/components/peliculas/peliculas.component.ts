@@ -15,9 +15,9 @@ export class PeliculasComponent implements OnInit {
   constructor() {
   	this.titulo = 'Componente película';
     this.peliculas = [
-      {title: "Requiem for a dream", image: 'https://images-na.ssl-images-amazon.com/images/I/81OOo4oFkcL._SL1500_.jpg'},
-      {title: "Harry Potter y el prisionero de Azcaban", image: 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'},
-      {title: "Psicosis", image: 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300'}
+      {year: 2019, title: "Requiem for a dream", image: 'https://images-na.ssl-images-amazon.com/images/I/81OOo4oFkcL._SL1500_.jpg'},
+      {year: 2018, title: "Harry Potter y el prisionero de Azcaban", image: 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'},
+      {year: 2017, title: "Psicosis", image: 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300'}
     ];
     // console.log('Constructor lanzado');
   }
