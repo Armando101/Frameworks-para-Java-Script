@@ -93,8 +93,10 @@ body {
   transition: 300ms all;
 }
 
-#menu a:hover {
-  color: rgb(230, 56, 56);
+#menu a:hover,
+.active {
+  color: rgb(230, 56, 56) !important;
+  outline: none !important; -moz-outline-style: none !important;
 }
 
 

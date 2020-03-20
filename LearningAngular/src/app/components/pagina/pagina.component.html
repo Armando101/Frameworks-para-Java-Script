@@ -1,1 +1,9 @@
 <h1 class="subheader">Página de pruebas</h1>
+
+<div *ngIf= "nombre && apellido">
+  <h2>Bienvenido: {{ nombre }} {{ apellido }}</h2>
+</div>
+
+<div *ngIf="!nombre || !apellido">
+  <h2>Bienvendio Usuario anónimo</h2>
+</div>
