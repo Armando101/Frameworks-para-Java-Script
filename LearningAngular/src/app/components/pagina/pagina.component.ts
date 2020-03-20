@@ -15,7 +15,8 @@ export class PaginaComponent implements OnInit {
 
   constructor(
     // Aquí utilizo los servicios de Router
-    // Router: Sacamos los parámetros de la URL
+    // ActivatedRoute: Sacamos los parámetros de la URL
+    // Router: Permite la navegación entre URL's
     private _route: ActivatedRoute,
     private _router: Router
   ) {}
@@ -29,6 +30,11 @@ export class PaginaComponent implements OnInit {
       this.apellido = params.apellido;
       console.log(params);
     });
+  }
+
+  redireccion() {
+    // alert("Método redirección");
+    this._router.navigate(['/pagina-de-pruebas', 'Armando', 'Rivera']);
   }
 
 }
