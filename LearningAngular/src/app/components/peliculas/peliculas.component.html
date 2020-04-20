@@ -2,21 +2,23 @@
 
 <div class="center">
   <section id='content'>
+  
+  <!-- El codigo comentado es de prueba -->
 
+<!-- 
     <h1 class="subheader">Películas</h1>
 
     <h2>{{titulo}}</h2>
     <button (click)="cambiarTitulo()">Púlsame</button>
     <hr/>
-
+ -->
     <!-- {{ peliculas[0].title }} -->
 
-    <hr/>
-
-    <h2>Número de peículas disponibles</h2>
+    <!-- <h2>Número de peículas disponibles</h2> -->
 
     <!-- Podemos hacer condicionales con la directiva ngIf -->
-    <div *ngIf="peliculas.length <= 3">
+    
+    <!--     <div *ngIf="peliculas.length <= 3">
       Hay pocas Películas
     </div>
 
@@ -26,35 +28,13 @@
     {{ peliculas.length }}
 
     <hr/>
+     -->
 
     <h2 class="subheader">Películas en cartelera</h2>
     <div id="articles" *ngIf="peliculas">
-      <article class="article-item" id="article-template" *ngFor="let pelicula of peliculas">
-        <div class="image-wrap">
-          <img src="{{pelicula.image}}" alt="{{pelicula.image}}">
-        </div>
-
-        <h2>{{pelicula.title}}</h2>
-        <span class="date">
-          Hace 5 minutos
-        </span>
-
-    <!-- Esta es una forma de incluir estilos -->
-        <!-- <span class="year" [class.year-red-one]="pelicula.year > 2016"
-                          [class.year-red-two]="pelicula.year < 2016"> -->
-
-          <!-- Esta es otra -->
-          <span class="year" [ngClass]="{
-                                'year-red-one': pelicula.year > 2016,
-                                'year-red-two': pelicula.year < 2016
-                              }">
-          {{pelicula.year}}
-        </span>
-
-        <a href="#">Leer más</a>
-        <div class="clearfix"></div>
-      </article>
-      <!-- Añadir artículos via JS -->
+      <div *ngFor="let pelicula of peliculas">      
+        <app-pelicula [pelicula]="pelicula" ></app-pelicula>
+      </div>
     </div>
  </section>
 </div>
