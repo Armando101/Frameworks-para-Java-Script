@@ -1,4 +1,5 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
+import { Pelicula } from '../models/pelicula';
 
 @Component({
   selector: 'peliculas',
@@ -8,16 +9,16 @@ import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 export class PeliculasComponent implements OnInit {
 
 	public titulo: string;
-  public peliculas: Array<any>;
+  public peliculas: Array<Pelicula>;
 
 	// En el constructor se asignan valores a las propiedades
 	// No es buena práctica agregar lógica aquí, eso va en el OnInit
   constructor() {
   	this.titulo = 'Componente película';
     this.peliculas = [
-      {year: 2019, title: "Requiem for a dream", image: 'https://images-na.ssl-images-amazon.com/images/I/81OOo4oFkcL._SL1500_.jpg'},
-      {year: 2018, title: "Harry Potter y el prisionero de Azcaban", image: 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'},
-      {year: 2017, title: "Psicosis", image: 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300'}
+    new Pelicula("Requiem for a dream", 2019, 'https://images-na.ssl-images-amazon.com/images/I/81OOo4oFkcL._SL1500_.jpg'),
+    new Pelicula("Harry Potter y el prisionero de Azcaban", 2018, 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'),
+    new Pelicula("Psicosis", 2017, 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300')
     ];
     // console.log('Constructor lanzado');
   }

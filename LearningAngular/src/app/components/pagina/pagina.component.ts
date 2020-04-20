@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // Cargo los componentes del router
-// Ahora ya puedo utilizar estos servicios
+// Ahora ya puedo utilizar estos servicios que nos permitirán recoger información de una ruta
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
