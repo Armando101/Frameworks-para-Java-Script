@@ -1,53 +1,60 @@
-<h1 class="subheader">Películas</h1>
+<app-slider [nombre]="'Películas'"></app-slider>
 
-<h2>{{titulo}}</h2>
-<button (click)="cambiarTitulo()">Púlsame</button>
-<hr/>
+<div class="center">
+  <section id='content'>
 
-<!-- {{ peliculas[0].title }} -->
+    <h1 class="subheader">Películas</h1>
 
-<hr/>
+    <h2>{{titulo}}</h2>
+    <button (click)="cambiarTitulo()">Púlsame</button>
+    <hr/>
 
-<h2>Número de peículas disponibles</h2>
+    <!-- {{ peliculas[0].title }} -->
 
-<!-- Podemos hacer condicionales con la directiva ngIf -->
-<div *ngIf="peliculas.length <= 3">
-  Hay pocas Películas
-</div>
+    <hr/>
 
-<div *ngIf="peliculas.length > 3">
-  Hay pocas Películas
-</div>
-{{ peliculas.length }}
+    <h2>Número de peículas disponibles</h2>
 
-<hr/>
-
-<h2 class="subheader">Películas en cartelera</h2>
-<div id="articles" *ngIf="peliculas">
-  <article class="article-item" id="article-template" *ngFor="let pelicula of peliculas">
-    <div class="image-wrap">
-      <img src="{{pelicula.image}}" alt="{{pelicula.image}}">
+    <!-- Podemos hacer condicionales con la directiva ngIf -->
+    <div *ngIf="peliculas.length <= 3">
+      Hay pocas Películas
     </div>
 
-    <h2>{{pelicula.title}}</h2>
-    <span class="date">
-      Hace 5 minutos
-    </span>
+    <div *ngIf="peliculas.length > 3">
+      Hay pocas Películas
+    </div>
+    {{ peliculas.length }}
 
-<!-- Esta es una forma de incluir estilos -->
-    <!-- <span class="year" [class.year-red-one]="pelicula.year > 2016"
-                      [class.year-red-two]="pelicula.year < 2016"> -->
+    <hr/>
 
-      <!-- Esta es otra -->
-      <span class="year" [ngClass]="{
-                            'year-red-one': pelicula.year > 2016,
-                            'year-red-two': pelicula.year < 2016
-                          }">
-      {{pelicula.year}}
-    </span>
+    <h2 class="subheader">Películas en cartelera</h2>
+    <div id="articles" *ngIf="peliculas">
+      <article class="article-item" id="article-template" *ngFor="let pelicula of peliculas">
+        <div class="image-wrap">
+          <img src="{{pelicula.image}}" alt="{{pelicula.image}}">
+        </div>
 
-    <a href="#">Leer más</a>
-    <div class="clearfix"></div>
-  </article>
-  <!-- Añadir artículos via JS -->
+        <h2>{{pelicula.title}}</h2>
+        <span class="date">
+          Hace 5 minutos
+        </span>
+
+    <!-- Esta es una forma de incluir estilos -->
+        <!-- <span class="year" [class.year-red-one]="pelicula.year > 2016"
+                          [class.year-red-two]="pelicula.year < 2016"> -->
+
+          <!-- Esta es otra -->
+          <span class="year" [ngClass]="{
+                                'year-red-one': pelicula.year > 2016,
+                                'year-red-two': pelicula.year < 2016
+                              }">
+          {{pelicula.year}}
+        </span>
+
+        <a href="#">Leer más</a>
+        <div class="clearfix"></div>
+      </article>
+      <!-- Añadir artículos via JS -->
+    </div>
+ </section>
 </div>
