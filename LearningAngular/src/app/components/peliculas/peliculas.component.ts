@@ -11,6 +11,7 @@ export class PeliculasComponent implements OnInit {
 	public titulo: string;
   public peliculas: Array<Pelicula>;
   public favorita: Pelicula;
+  public fecha: any;
 
 	// En el constructor se asignan valores a las propiedades
 	// No es buena práctica agregar lógica aquí, eso va en el OnInit
@@ -22,6 +23,7 @@ export class PeliculasComponent implements OnInit {
     new Pelicula("Psicosis", 2017, 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300')
     ];
     // console.log('Constructor lanzado');
+    this.fecha = new Date(2020, 9, 12);
   }
 
   // OnInit es un hook que se ejecuta cuando cargamos la etiqueta
