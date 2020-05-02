@@ -11,12 +11,12 @@
       {{favorita.title | uppercase}}
       </h4>
       <h5>
-      {{favorita.year | date: 'fullDate'}}
+      {{(favorita.year | date: 'fullDate') | espar}}
       </h5>
-      <h6>{{this.fecha | date}}</h6>
+      <!-- <h6>{{this.fecha | date}}</h6>
       <h6>{{this.fecha | date: 'full'}}</h6>
       <h6>{{this.fecha | date: 'dd/MM/yy'}}</h6>
-      <h6>{{this.fecha | date: 'dd/MM/yyyy'}}</h6>
+      <h6>{{this.fecha | date: 'dd/MM/yyyy'}}</h6> -->
     </div>
 
   <!-- El codigo comentado es de prueba -->
