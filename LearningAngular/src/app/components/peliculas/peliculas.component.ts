@@ -10,6 +10,7 @@ export class PeliculasComponent implements OnInit {
 
 	public titulo: string;
   public peliculas: Array<Pelicula>;
+  public favorita: Pelicula;
 
 	// En el constructor se asignan valores a las propiedades
 	// No es buena práctica agregar lógica aquí, eso va en el OnInit
@@ -42,5 +43,10 @@ export class PeliculasComponent implements OnInit {
   // Este hook se ejecuta antes de elminiar un componente
   ngOnDestroy() {
   	console.log('El componente se eliminará de la ejecución');
+  }
+
+  mostrarFavorita(event) {
+    console.log(event);
+    this.favorita = event.pelicula;
   }
 }

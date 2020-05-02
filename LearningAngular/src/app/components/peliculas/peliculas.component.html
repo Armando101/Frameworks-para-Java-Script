@@ -2,7 +2,19 @@
 
 <div class="center">
   <section id='content'>
-  
+    
+    <div id="favorita" *ngIf="favorita">
+      <h2 class="subheader">
+        Película favorita
+      </h2>
+      <h4>
+      {{favorita.title}}
+      </h4>
+      <h5>
+      {{favorita.year}}
+      </h5>
+    </div>
+
   <!-- El codigo comentado es de prueba -->
 
 <!-- 
@@ -33,7 +45,8 @@
     <h2 class="subheader">Películas en cartelera</h2>
     <div id="articles" *ngIf="peliculas">
       <div *ngFor="let pelicula of peliculas">      
-        <app-pelicula [pelicula]="pelicula" ></app-pelicula>
+        <app-pelicula [pelicula]="pelicula" (MarcarFavorita)="mostrarFavorita($event)">
+        </app-pelicula>
       </div>
     </div>
  </section>
