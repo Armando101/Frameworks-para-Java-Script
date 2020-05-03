@@ -1,10 +1,12 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
-import { Pelicula } from '../models/pelicula';
+import { Pelicula } from '../../models/pelicula';
+import { PeliculaService } from '../../services/pelicula.service';
 
 @Component({
   selector: 'peliculas',
   templateUrl: './peliculas.component.html',
-  styleUrls: ['./peliculas.component.css']
+  styleUrls: ['./peliculas.component.css'],
+  providers: [PeliculaService]
 })
 export class PeliculasComponent implements OnInit {
 
@@ -15,13 +17,12 @@ export class PeliculasComponent implements OnInit {
 
 	// En el constructor se asignan valores a las propiedades
 	// No es buena práctica agregar lógica aquí, eso va en el OnInit
-  constructor() {
+  constructor(
+    // Es necsario declara esta variable para usar el servicio
+      private _peliculaService: PeliculaService
+    ) {
   	this.titulo = 'Componente película';
-    this.peliculas = [
-    new Pelicula("Requiem for a dream", 2019, 'https://images-na.ssl-images-amazon.com/images/I/81OOo4oFkcL._SL1500_.jpg'),
-    new Pelicula("Harry Potter y el prisionero de Azcaban", 2018, 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'),
-    new Pelicula("Psicosis", 2017, 'https://diariodefriki.files.wordpress.com/2017/10/psycho-559c10640aba2.jpg?w=210&h=300')
-    ];
+    this.peliculas = this._peliculaService.getPeliculas();
     // console.log('Constructor lanzado');
     this.fecha = new Date(2020, 9, 12);
   }
@@ -30,6 +31,7 @@ export class PeliculasComponent implements OnInit {
   // Se ejecuta después del constructor
   ngOnInit(): void {
   	console.log('Componente iniciado');
+    console.log(this._peliculaService.holaMundo());
   }
 
   // Este hook se ejecuta cuando hay un cambio
