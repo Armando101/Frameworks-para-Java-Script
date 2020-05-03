@@ -63,7 +63,16 @@
         <div class="clearfix"></div>
         <!-- Deshabilito el botón en caso de que sea inválido -->
         <input class="btn btn-succes" type="submit" [disabled]="userForm.invalid" name="enviar" value="Enviar">
-
       </form>
+      <h2 class="subheader">Eventos</h2>
+      <!---------------- Eventos -------------------->
+      <!-- Evento onClick -->
+      <button (click)="hasDadoClick()">Dale click</button>
+      <!-- Onblur indica cuando salgo de un input -->
+      <!-- <input type="text" [(ngModel)]="campo" (blur)="hasSalido()"/> -->
+      
+      <!-- Keyup indica cuando dejo de presionar una tecla, tambien puedo especificar que tecla -->
+      <input type="text" [(ngModel)]="campo" (keyup.enter)="hasSalido()"/>
+      {{campo}}
  </section>
 </div>
