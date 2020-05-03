@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
+import { Article } from '../../models/article';
+import { Global } from '../../services/global';
 
 @Component({
   selector: 'app-blog',
@@ -9,9 +11,15 @@ import { ArticleService } from '../../services/article.service';
 })
 export class BlogComponent implements OnInit {
 
+	// En este arreglo guardamos los articulos que me llegan de la base de datos con HttpClient
+	public articles: Article[];
+	public url: string;
+
   constructor(
   	private _articleService: ArticleService
-  ) { }
+  ) { 
+  	this.url = Global.url;
+  }
 
   ngOnInit(): void {
   	// this._articleService.pruebas();
@@ -23,6 +31,9 @@ export class BlogComponent implements OnInit {
   	.subscribe(
   		response => {
   			console.log(response);
+  			if (response.articles) {
+  				this.articles = response.articles;
+  			}
   		},
   		error => {
   			console.error(error);
