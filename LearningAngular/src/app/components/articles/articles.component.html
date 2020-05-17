@@ -14,7 +14,8 @@
         <!-- Usamos los pipes de Angular momento para que se muestre en español y hace cuánto tiempo -->
         {{article.date | amLocale: 'es' | amTimeAgo }}
       </span>
-      <a href="#">Leer más</a>
+      <!-- Me redirige al link /blog/articulo/article._id --> 
+      <a [routerLink]="['/blog/articulo', article._id]">Leer más</a>
       <div class="clearfix"></div>
     </article>
   </div>
