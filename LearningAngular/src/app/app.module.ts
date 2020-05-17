@@ -19,6 +19,7 @@ import { PaginaComponent } from './components/pagina/pagina.component';
 import { ErrorComponent } from './components/error/error.component';
 import { PeliculaComponent } from './components/pelicula/pelicula.component';
 import { EsParPipe } from './pipes/espar.pipe';
+import { ArticlesComponent } from './components/articles/articles.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { EsParPipe } from './pipes/espar.pipe';
     PaginaComponent,
     ErrorComponent,
     PeliculaComponent,
-    EsParPipe
+    EsParPipe,
+    ArticlesComponent
   ],
   imports: [
     // Aquí van los módulos
