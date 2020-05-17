@@ -180,6 +180,16 @@ body {
   outline: none !important; -moz-outline-style: none !important;
 }
 
+.btn-warning {
+  background-color: rgb(238, 165, 6) !important;
+  color: white !important;
+}
+
+.btn-danger {
+  background-color: rgb(201, 21, 21) !important;
+  color: white !important;
+}
+
 #slider.slider-small {
   height: 150px;
 }
@@ -241,6 +251,7 @@ body {
   transition: 300ms;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
 }
 .btn-succes {
   /* background: rgb(52, 178, 231); */
