@@ -1,3 +1,6 @@
+<div class="loading" *ngIf='!articles'>
+  Cargando....
+</div>
 <div id="articles">
     <article class="article-item" id="article-template" *ngFor="let article of articles">
       <div class="image-wrap">
@@ -8,7 +11,8 @@
 
       <h2>{{article.title}}</h2>
       <span class="date">
-        {{article.date}}
+        <!-- Usamos los pipes de Angular momento para que se muestre en español y hace cuánto tiempo -->
+        {{article.date | amLocale: 'es' | amTimeAgo }}
       </span>
       <a href="#">Leer más</a>
       <div class="clearfix"></div>
