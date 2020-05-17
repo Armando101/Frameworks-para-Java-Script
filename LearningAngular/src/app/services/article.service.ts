@@ -23,7 +23,13 @@ export class ArticleService {
 
 	// Indico que va a devolver un observable
 	// Un Onservable me permite recoger los datos que me devuelven los métodos de los servicios
-	getArticles():Observable<any> {
-		return this._http.get(this.url + 'articles');
+	getArticles(last: any = null):Observable<any> {
+		var articles = 'articles';
+
+		if (last != null) {
+			var articles = 'articles/true';
+		}
+
+		return this._http.get(this.url + articles);
 	}
 }
