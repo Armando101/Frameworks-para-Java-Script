@@ -1,6 +1,11 @@
 <div class="loading" *ngIf='!articles'>
   Cargando....
 </div>
+
+<div class="loading" *ngIf='articles && articles.length == 0'>
+  No hay artículos para mostrar, inténtelo más tarde
+</div>
+
 <div id="articles">
     <article class="article-item" id="article-template" *ngFor="let article of articles">
       <div class="image-wrap">
