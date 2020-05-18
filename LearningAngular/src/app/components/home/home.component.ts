@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  	this._articleService.getArticles()
+  	this._articleService.getArticles(true)
   	.subscribe(
   		response => {
   			console.log(response);
