@@ -57,7 +57,11 @@ var controller = {
 			// Asignar valores
 			article.title = params.title;
 			article.content = params.content;
-			article.image = null;
+			if (params.image) {
+				article.image = params.image;
+			} else {
+				article.image = null;
+			}
 
 			// Guardar el artículo
 			// Usamos el método save, le podemos pasar una función de callBack
@@ -284,21 +288,29 @@ var controller = {
 			// Si todo es válido, saco el id de la url
 			var article_id = req.params.id;
 
-			// Busca el artículo
-			Article.findOneAndUpdate({_id:article_id}, {image: file_name}, {new:true}, (err, articleUpdate) =>{
-				
-				if (err || !articleUpdate) {
+			if (article_id) 
+			{
+				// Busca el artículo
+				Article.findOneAndUpdate({_id:article_id}, {image: file_name}, {new:true}, (err, articleUpdate) =>{
+					
+					if (err || !articleUpdate) {
+						return res.status(200).send({
+							status: 'succes',
+							message: 'Error al subir el archivo'
+						})
+					}
+
 					return res.status(200).send({
 						status: 'succes',
-						message: 'Error al subir el archivo'
-					})
-				}
-
+						article: articleUpdate
+					});
+				});
+			} else {
 				return res.status(200).send({
 					status: 'succes',
-					article: articleUpdate
+					image: file_name
 				});
-			});
+			}
 		}
 	},
 

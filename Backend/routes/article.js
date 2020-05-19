@@ -31,7 +31,7 @@ router.get('/articles/:last?', article_controller.getArticles);
 router.get('/article/:id', article_controller.getArticle);
 router.put('/article/:id', article_controller.update);
 router.delete('/article/:id', article_controller.delete);
-router.post('/upload-image/:id', md_upload, article_controller.upload);
+router.post('/upload-image/:id?', md_upload, article_controller.upload);
 router.get('/get-image/:image', article_controller.getImage);
 router.get('/search/:search', article_controller.search);
 
