@@ -28,7 +28,7 @@ export class PaginaComponent implements OnInit {
     this._route.params.subscribe((params: Params)=> {
       this.nombre = params.nombre;
       this.apellido = params.apellido;
-      console.log(params);
+      // console.log(params);
     });
   }
 

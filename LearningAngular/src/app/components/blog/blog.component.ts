@@ -30,7 +30,7 @@ export class BlogComponent implements OnInit {
   	this._articleService.getArticles()
   	.subscribe(
   		response => {
-  			console.log(response);
+  			// console.log(response);
   			if (response.articles) {
   				this.articles = response.articles;
   			}
