@@ -3,6 +3,7 @@ import { Article } from '../../models/article';
 import { ArticleService } from '../../services/article.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Global } from '../../services/global';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-article-edit',
@@ -63,13 +64,25 @@ export class ArticleEditComponent implements OnInit {
 	  			console.log(response);
 	  			this.status = 'succes';
 	  			this.article = response.article;
+
+          // Alert
+           swal(
+             'Articulo editado!!!',
+             'El artículo se ha editado correctamente',
+             'success'
+           );
+
 	  			this._router.navigate(['/blog/articulo', this.article._id]);
 	  		} else {
 	  			this.status = 'error'
 	  		}
   		},
-  		error => {
-  			console.error(error);
+  		error => {// Alert
+           swal(
+             'Hubo un problema al editar el artículo',
+             'El artículo no se ha editado correctamente',
+             'error'
+           );console.error(error);
   			this.status = 'error';
   		}
   	);
