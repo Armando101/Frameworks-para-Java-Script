@@ -44,4 +44,17 @@ export class ArticleComponent implements OnInit {
   	});
   }
 
+  delete(id) {
+    this._articleService.delete(id).subscribe(
+      response => {
+        console.log(response);
+        this._router.navigate(['/blog']);
+      },
+      error => {
+        console.log(error);
+        this._router.navigate(['/blog']);
+      }
+    );
+  }
+
 }

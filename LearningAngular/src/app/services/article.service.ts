@@ -56,7 +56,7 @@ export class ArticleService {
 	}
 
 	delete(id): Observable<any> {
-		let headers = new HttpHeaders().set('Contet-type', 'application/json');
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.delete(this.url + 'article/' + id, { headers: headers });
 	}
 }
