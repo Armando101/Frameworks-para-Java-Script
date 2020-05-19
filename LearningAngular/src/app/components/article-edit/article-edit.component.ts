@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from '../../models/article';
 import { ArticleService } from '../../services/article.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
 import { Global } from '../../services/global';
 
 @Component({
-  selector: 'app-article-new',
-  templateUrl: './article-new.component.html',
-  styleUrls: ['./article-new.component.css'],
+  selector: 'app-article-edit',
+  templateUrl: '../article-new/article-new.component.html',
+  styleUrls: ['./article-edit.component.css'],
   providers: [ArticleService]
-})
-export class ArticleNewComponent implements OnInit {
 
-	public article: Article;
+})
+export class ArticleEditComponent implements OnInit {
+
+ 	public article: Article;
 	public status: string;
-  public page_title: string;
-  public is_edit: boolean;
-  public url: null;
+	public is_edit: boolean;
+	public page_title: string;
+	public url: string;
 
   public afuConfig = {
     multiple: false,
@@ -47,22 +47,23 @@ export class ArticleNewComponent implements OnInit {
   	private _router: Router
   ) { 
   	this.article = new Article('', '', '', null, null);
-    this.page_title = 'Crear artículo';
-    this.is_edit = false;
-
+  	this.is_edit = true;
+  	this.page_title = 'Editar artículo';
+  	this.url = Global.url;
   }
 
   ngOnInit(): void {
+  	this.getArticle();
   }
 
   onSubmit() {
-  	this._articleService.create(this.article).subscribe(
+  	this._articleService.update(this.article._id, this.article).subscribe(
   		response => {
 	  		if (response.status == 'succes') {
 	  			console.log(response);
 	  			this.status = 'succes';
 	  			this.article = response.article;
-	  			this._router.navigate(['/blog']);
+	  			this._router.navigate(['/blog/articulo', this.article._id]);
 	  		} else {
 	  			this.status = 'error'
 	  		}
@@ -78,6 +79,26 @@ export class ArticleNewComponent implements OnInit {
     let imageData = JSON.parse(data.response);
     console.log(imageData);
     this.article.image = imageData.image;
+  }
+
+  getArticle() {
+  	this._route.params.subscribe(params => {
+  		// console.log(params);	// Objeto con el id únicamente
+  		let id = params['id'];
+  		this._articleService.getArticle(id).subscribe(
+  		response => {
+  			if (response.article) {
+  				this.article = response.article;
+  			} else {
+  				this._router.navigate(['/home']);
+  			}
+  			// console.log(response);		// Objeto con los datos del artículo 
+  		}, 
+  		error => {
+  			console.log(error);
+  			this._router.navigate(['/home']);
+  		});
+  	});
   }
 
 }
