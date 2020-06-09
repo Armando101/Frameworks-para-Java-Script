@@ -7,6 +7,7 @@ import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
 import Header from './components/Header';
 import Slider from './components/Slider';
+import Sidebar from './components/Sidebar';
 
 
 function helloWord(name, age) {
@@ -29,16 +30,14 @@ function App() {
       <Header/>
       <Slider/>
 
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2> {helloWord(name, 22)} </h2>
-        <section className="components">
-          <MyComponent/>
-          <Peliculas/>
-        </section>
-
-      </header>
-
+        <div className="center">
+          <section id="content">
+            <MyComponent/>
+            <Peliculas/>
+          </section>
+          
+          <Sidebar/>
+        </div>
 
     </div>
   );
