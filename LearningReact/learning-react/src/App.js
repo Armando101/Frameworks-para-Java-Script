@@ -6,6 +6,7 @@ import './assets/css/App.css';
 import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
 import Header from './components/Header';
+import Slider from './components/Slider';
 
 
 function helloWord(name, age) {
@@ -26,6 +27,8 @@ function App() {
   return (
     <div className="App">
       <Header/>
+      <Slider/>
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h2> {helloWord(name, 22)} </h2>
