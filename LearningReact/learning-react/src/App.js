@@ -8,6 +8,7 @@ import Peliculas from './components/Peliculas';
 import Header from './components/Header';
 import Slider from './components/Slider';
 import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
 
 
 function helloWord(name, age) {
@@ -38,7 +39,8 @@ function App() {
           
           <Sidebar/>
         </div>
-
+        <div className="clearfix"></div>
+      <Footer/>
     </div>
   );
 }
