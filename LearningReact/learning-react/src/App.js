@@ -4,6 +4,7 @@ import './assets/css/App.css';
 
 // Importar componentes
 import MyComponent from './components/MyComponent';
+import Peliculas from './components/Peliculas';
 
 function helloWord(name, age) {
   const introduce = (
@@ -24,12 +25,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p> {helloWord(name, 22)} </p>
+        <h2> {helloWord(name, 22)} </h2>
         <section className="components">
-          <MyComponent />
+          <MyComponent/>
+          <Peliculas/>
         </section>
 
       </header>
