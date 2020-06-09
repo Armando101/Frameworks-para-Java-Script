@@ -1,6 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from './assets/img/logo.svg';
+import './assets/css/App.css';
+
+// Importar componentes
+import MyComponent from './components/MyComponent';
 
 function helloWord(name, age) {
   const introduce = (
@@ -25,15 +28,13 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <p> {helloWord(name, 22)} </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <section className="components">
+          <MyComponent />
+        </section>
+
       </header>
+
+
     </div>
   );
 }
