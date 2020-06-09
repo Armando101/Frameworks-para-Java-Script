@@ -5,6 +5,8 @@ import './assets/css/App.css';
 // Importar componentes
 import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
+import Header from './components/Header';
+
 
 function helloWord(name, age) {
   const introduce = (
@@ -23,6 +25,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h2> {helloWord(name, 22)} </h2>
