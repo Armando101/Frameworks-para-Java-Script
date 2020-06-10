@@ -11,10 +11,15 @@ import SeccionPruebas from './components/SeccionPruebas';
 
 function App() {
   
+  const buttonString = "Ir al blog";
+
   return (
     <div className="App">
       <Header/>
-      <Slider/>
+      <Slider
+        title="Bienvenido a mi sitio web con React"
+        btn = {buttonString}
+      />
 
         <div className="center">
           

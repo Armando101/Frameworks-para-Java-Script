@@ -25,7 +25,8 @@ class SectionPruebas extends Component{
 		return introduce;
 	}
 
-	sumar() {
+	// Si declaramos los metodos con arrow functions no es necesario pasarle el bind(this)
+	sumar = ()=> {
 		/*this.contador = this.contador++;*/
 		this.setState({
 			contador: (this.state.contador+1)
@@ -51,7 +52,7 @@ class SectionPruebas extends Component{
 				<h2 className='subheader'>Estado</h2>
 				<p>Contador: {this.state.contador}</p>
 				<p>
-					<input type="button" value="Sumar" onClick={this.sumar.bind(this)}/>
+					<input type="button" value="Sumar" onClick={this.sumar}/>
 					<input type="button" value="Restar" onClick={this.restar.bind(this)}/>
 				</p>
           	</section>
