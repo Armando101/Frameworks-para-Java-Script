@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Peliculas from './Peliculas';
 
 class SectionPruebas extends Component{
 
@@ -47,7 +46,6 @@ class SectionPruebas extends Component{
 				{this.helloWord('Armando', 22)}
 
 				<h2 className='subheader'>Componentes</h2>	
-	            <Peliculas/>
 			
 				<h2 className='subheader'>Estado</h2>
 				<p>Contador: {this.state.contador}</p>
