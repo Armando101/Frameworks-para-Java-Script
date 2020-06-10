@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 import Peliculas from './Peliculas';
 
 class SectionPruebas extends Component{
+
+	contador = 0;
+
+	constructor(props) {
+		super(props);
+
+		// El state es la parte donde tenemos las propiedades que queremos que cargen de manera dinamica
+		this.state = {
+			contador: 0
+		};
+	}
+
 	helloWord(name, age) {
   		const introduce = (
 	    	<div>
@@ -13,13 +25,35 @@ class SectionPruebas extends Component{
 		return introduce;
 	}
 
+	sumar() {
+		/*this.contador = this.contador++;*/
+		this.setState({
+			contador: (this.state.contador+1)
+		});
+	}
+
+	restar() {
+		this.setState({
+			contador: (this.state.contador-1)
+		});
+/*		this.contador = this.contador--;*/
+	}
+
 	render() {
 		return(
 			<section id="content">
-				<h2>Test Section</h2>	
+				<h2 className='subheader'>Funciones y JSX</h2>	
 				{this.helloWord('Armando', 22)}
 
+				<h2 className='subheader'>Componentes</h2>	
 	            <Peliculas/>
+			
+				<h2 className='subheader'>Estado</h2>
+				<p>Contador: {this.state.contador}</p>
+				<p>
+					<input type="button" value="Sumar" onClick={this.sumar.bind(this)}/>
+					<input type="button" value="Restar" onClick={this.restar.bind(this)}/>
+				</p>
           	</section>
 		);
 	}
