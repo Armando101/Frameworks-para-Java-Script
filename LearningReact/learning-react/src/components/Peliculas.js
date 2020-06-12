@@ -13,11 +13,21 @@ class Peliculas extends Component {
 		name: 'Armando Rivera'
 	}
 
+	changeTitle = () => {
+		const { peliculas } = this.state;
+		peliculas[0].title = 'Psicosis'
+
+		this.setState({
+			peliculas
+		})
+	}
+
 	render() {
 		return(
 			<div id='content' className="movies">
 				<h2 className="subheader">Movies</h2>
 				<p>Best movies ever, by {this.state.name}</p>
+				<p><button onClick={this.changeTitle}>Change Psyco title</button></p>
 				{/*Crear componente pelicula*/}
 				{
 					this.state.peliculas.map((pelicula, index)=> {
