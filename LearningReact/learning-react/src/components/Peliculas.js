@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import StaticMessage from './staticMesage';
 
-class Pelicula extends Component {
+import Pelicula from './Pelicula';
+
+class Peliculas extends Component {
 	
 	state = {
 		peliculas: [
@@ -21,19 +22,7 @@ class Pelicula extends Component {
 				{
 					this.state.peliculas.map((pelicula, index)=> {
 						return(
-							<article className="article-item" id="article-template">
-								<h2>{pelicula.title}</h2>
-					            <div className="image-wrap">
-					              <img src={pelicula.image} alt={pelicula.title}/>
-					            </div>
-
-					            <h2>Articulo de prueba</h2>
-					            <span class="date">
-					              Hace 5 minutos
-					            </span>
-					            <a href="#">Leer más</a>
-					            <div class="clearfix"></div>
-					        </article>
+							<Pelicula key={index} pelicula={pelicula}/>
 						);
 					})
 				}
@@ -42,4 +31,4 @@ class Pelicula extends Component {
 	}
 }
 
-export default Pelicula;
+export default Peliculas;
