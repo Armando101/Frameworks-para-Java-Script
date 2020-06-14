@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 import Pelicula from './Pelicula';
+import Slider from './Slider';
+import Sidebar from './Sidebar';
 
 class Peliculas extends Component {
 	
@@ -49,43 +51,54 @@ class Peliculas extends Component {
 		*/
 
 		return(
-			<div id='content' className="movies">
-				<h2 className="subheader">Movies</h2>
-				<p>Best movies ever, by {this.state.name}</p>
-				<p><button onClick={this.changeTitle}>Change Psyco title</button></p>
+			<div id="peliculas">
+				<Slider
+			       title="Peliculas"
+			       size="slider-small"
+			    />
+				<div className="center">
+					<div id='content' className="movies">
+						<h2 className="subheader">Movies</h2>
+						<p>Best movies ever, by {this.state.name}</p>
+						<p><button onClick={this.changeTitle}>Change Psyco title</button></p>
 
-				{/*Para hacer if puedo hacerlo con doble &
-				Esto es condition Codigo a ejecutar
-				{ this.state.favorita.title &&*/}
+						{/*Para hacer if puedo hacerlo con doble &
+						Esto es condition Codigo a ejecutar
+						{ this.state.favorita.title &&*/}
 
-				{/*Tambien puedo hacer uso del operador ternario para condicionales mas complejas*/}
-				{ this.state.favorita.title ? (
-					<p className="favorita" style={{
-											background: 'green',
-											color: 'white',
-											padding: '10px'
-										}}>
-						<strong>La pelicula favorita es: </strong>
-						<span>{this.state.favorita.title}</span>
-					</p>)
-					:(
-						<p>No hay pelicula favorita</p>
-					)
-				}
+						{/*Tambien puedo hacer uso del operador ternario para condicionales mas complejas*/}
+						{ this.state.favorita.title ? (
+							<p className="favorita" style={{
+													background: 'green',
+													color: 'white',
+													padding: '10px'
+												}}>
+								<strong>La pelicula favorita es: </strong>
+								<span>{this.state.favorita.title}</span>
+							</p>)
+							:(
+								<p>No hay pelicula favorita</p>
+							)
+						}
 
-				{/*Crear componente pelicula*/}
-				{
-					this.state.peliculas.map((pelicula, index) => {
-						return(
-							<Pelicula
-								key={index}
-								pelicula={pelicula}
-								indice={index}
-								checkFavorite={this.favorite}
-							/>
-						);
-					})
-				}
+						{/*Crear componente pelicula*/}
+						{
+							this.state.peliculas.map((pelicula, index) => {
+								return(
+									<Pelicula
+										key={index}
+										pelicula={pelicula}
+										indice={index}
+										checkFavorite={this.favorite}
+									/>
+								);
+							})
+						}
+					</div>
+					<Sidebar
+						blog="false"
+					/>
+				</div>
 			</div>
 		);
 	}

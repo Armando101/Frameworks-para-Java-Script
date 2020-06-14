@@ -1,34 +1,29 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import SeccionPruebas from './components/SeccionPruebas';
 import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
 import Error from './components/Error';
 import Header from './components/Header';
-import Slider from './components/Slider';
 import Footer from './components/Footer';
-import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import Blog from './components/Blog';
+import Formulario from './components/Formulario';
 
 class Router extends Component {
 	render() {
-		const buttonString = "Ir al blog";
 		return(
 			<BrowserRouter>
-			<Header/>
-			<Slider
-		       title="Bienvenido a mi sitio web con React"
-		       btn = {buttonString}
-		    />
-
-		    <div className="center"> 	
+			<Header/> 	
  		   		{/* Configurar Rutas y Paginas */}
 				<Switch>
-					<Route exact path="/" component={Peliculas} />
-					<Route exact path="/home" component={Peliculas} />
-					<Route path="/ruta-prueba" component={SeccionPruebas} />
-					<Route path="/segunda-ruta" component={MyComponent} />
+					<Route exact path="/" component={Home} />
+					<Route exact path="/home" component={Home} />
+					<Route path="/blog" component={Blog} />
+					<Route path="/formulario" component={Formulario} />
+					<Route path="/peliculas" component={Peliculas} />
 					
+					<Route path="/segunda-ruta" component={MyComponent} />
 					<Route path="/pagina-1" render = {() =>(
 							<section id="content">
 								<h1>Hello World from Page 1</h1>
@@ -53,11 +48,8 @@ class Router extends Component {
 					
 					<Route component={Error} />
 				</Switch>
-				<Sidebar/>
-			
 			<div className="clearfix"></div>
-	        </div>
-			<Footer/>
+	        <Footer/>
 			</BrowserRouter>
 		);
 	}

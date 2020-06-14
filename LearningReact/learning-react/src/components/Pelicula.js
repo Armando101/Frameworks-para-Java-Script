@@ -7,7 +7,6 @@ class Pelicula extends Component {
 	}
 
 	render() {
-		const pelicula = this.props.pelicula;
 		const { title, image } = this.props.pelicula;
 
 		return(
