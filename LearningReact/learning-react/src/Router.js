@@ -17,6 +17,13 @@ class Router extends Component {
 					<Route path="/ruta-prueba" component={SeccionPruebas} />
 					<Route path="/segunda-ruta" component={MyComponent} />
 					
+					<Route path="/pagina-1" render = {() =>(
+							<section id="content">
+								<h1>Hello World from Page 1</h1>
+								<MyComponent saludo="Hola chaval"/>
+							</section>
+						)} />
+					
 					<Route component={Error} />
 				</Switch>
 			

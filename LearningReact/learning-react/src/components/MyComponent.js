@@ -10,7 +10,10 @@ class MyComponent extends Component {
 		};
 
 		return(
-			<div> 
+			<div>
+			{this.props.saludo &&
+				<h3>{this.props.saludo}</h3>
+			}
 			{/*Si quiero incluir mas de una linea necesito meterlo en un contenedor
 			Puede ser un React.fragment o un div*/}
 				<h1> {'Recipe: ' + recipe.name} </h1>
