@@ -53,7 +53,13 @@ class Peliculas extends Component {
 				<h2 className="subheader">Movies</h2>
 				<p>Best movies ever, by {this.state.name}</p>
 				<p><button onClick={this.changeTitle}>Change Psyco title</button></p>
-				{ this.state.favorita.title &&
+
+				{/*Para hacer if puedo hacerlo con doble &
+				Esto es condition Codigo a ejecutar
+				{ this.state.favorita.title &&*/}
+
+				{/*Tambien puedo hacer uso del operador ternario para condicionales mas complejas*/}
+				{ this.state.favorita.title ? (
 					<p className="favorita" style={{
 											background: 'green',
 											color: 'white',
@@ -61,7 +67,10 @@ class Peliculas extends Component {
 										}}>
 						<strong>La pelicula favorita es: </strong>
 						<span>{this.state.favorita.title}</span>
-					</p>
+					</p>)
+					:(
+						<p>No hay pelicula favorita</p>
+					)
 				}
 
 				{/*Crear componente pelicula*/}
