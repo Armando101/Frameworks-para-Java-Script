@@ -4,15 +4,7 @@ import Pelicula from './Pelicula';
 
 class Peliculas extends Component {
 	
-	state = {
-		peliculas: [
-			{ title: 'Psycho', image: 'https://images-na.ssl-images-amazon.com/images/I/81nZt+t7dBL.jpg'},
-			{ title: 'Harry Potter', image: 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'},
-			{ title: 'Requiem for a dream', image: 'https://images-na.ssl-images-amazon.com/images/I/51ySO%2Bc6DnL._AC_.jpg'}
-		],
-		name: 'Armando Rivera',
-		favorita: {	}
-	}
+	state = {}
 
 	changeTitle = () => {
 		const { peliculas } = this.state;
@@ -29,6 +21,19 @@ class Peliculas extends Component {
 
 		this.setState({
 			favorita: pelicula
+		})
+	}
+
+	// Indico que antes de que se monte mi componente me cargue estos datos
+	componentWillMount() {
+		this.setState({
+			peliculas: [
+			{ title: 'Psycho', image: 'https://images-na.ssl-images-amazon.com/images/I/81nZt+t7dBL.jpg'},
+			{ title: 'Harry Potter', image: 'https://es.web.img2.acsta.net/pictures/14/04/30/11/36/185120.jpg'},
+			{ title: 'Requiem for a dream', image: 'https://images-na.ssl-images-amazon.com/images/I/51ySO%2Bc6DnL._AC_.jpg'}
+			],
+			name: 'Armando Rivera',
+			favorita: {	}
 		})
 	}
 
