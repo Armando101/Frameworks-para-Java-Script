@@ -23,6 +23,21 @@ class Router extends Component {
 								<MyComponent saludo="Hola chaval"/>
 							</section>
 						)} />
+
+					<Route exact path='/pruebas/:nombre/:apellidos?' render={(props) => {
+						const {nombre, apellidos} = props.match.params;
+						return (
+							<div id='content'>
+								<h1 class='subheader'>Test Page</h1>
+								<h2>
+									{apellidos 
+										? (<span>Hola {nombre} {apellidos}</span>)
+										: (<span>Hola {nombre}</span>)
+									}
+								</h2>
+							</div>
+						);
+					}}/>
 					
 					<Route component={Error} />
 				</Switch>
