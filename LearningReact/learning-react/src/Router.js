@@ -5,15 +5,27 @@ import SeccionPruebas from './components/SeccionPruebas';
 import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
 import Error from './components/Error';
+import Header from './components/Header';
+import Slider from './components/Slider';
+import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
 
 class Router extends Component {
 	render() {
+		const buttonString = "Ir al blog";
 		return(
 			<BrowserRouter>
+			<Header/>
+			<Slider
+		       title="Bienvenido a mi sitio web con React"
+		       btn = {buttonString}
+		    />
 
-			{/* Configurar Rutas y Paginas */}
+		    <div className="center"> 	
+ 		   		{/* Configurar Rutas y Paginas */}
 				<Switch>
 					<Route exact path="/" component={Peliculas} />
+					<Route exact path="/home" component={Peliculas} />
 					<Route path="/ruta-prueba" component={SeccionPruebas} />
 					<Route path="/segunda-ruta" component={MyComponent} />
 					
@@ -41,7 +53,11 @@ class Router extends Component {
 					
 					<Route component={Error} />
 				</Switch>
+				<Sidebar/>
 			
+			<div className="clearfix"></div>
+	        </div>
+			<Footer/>
 			</BrowserRouter>
 		);
 	}

@@ -10,7 +10,7 @@ class MyComponent extends Component {
 		};
 
 		return(
-			<div>
+			<div id='content'>
 			{this.props.saludo &&
 				<h3>{this.props.saludo}</h3>
 			}
@@ -20,7 +20,7 @@ class MyComponent extends Component {
 				<h2> {'Calories: ' + recipe.calories} </h2>
 				<ol>
 					{
-						recipe.ingredients.map((index, i)=> {
+						recipe.ingredients.map((index, i) => {
 							console.log(index);
 							return(
 								<li key={i}>
