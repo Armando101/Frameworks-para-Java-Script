@@ -19,7 +19,10 @@ class Router extends Component {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/home" component={Home} />
-					<Route path="/blog" component={Blog} />
+					<Route exact path="/blog" component={Blog} />
+					<Route exact path="/blog/articulo/:id" render={() => (
+						<h1>Pagina Individual</h1>
+					)} />
 					<Route path="/formulario" component={Formulario} />
 					<Route path="/peliculas" component={Peliculas} />
 					

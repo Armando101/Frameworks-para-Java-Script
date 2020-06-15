@@ -3,6 +3,8 @@ import Moment from 'react-moment';
 import 'moment/locale/es';
 import Global from '../Global';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 class Articles extends Component {
 
@@ -14,7 +16,23 @@ class Articles extends Component {
 	}
 
 	componentWillMount() {
-		this.getArticles();
+		const home = this.props.home;
+		if (home === 'true') {
+			this.getLastArticles();
+		} else {
+			this.getArticles();
+		}
+	}
+
+	getLastArticles = () => {
+		axios.get(`${this.url}/articles/:last`)
+			.then(res => {
+				this.setState({
+					articles: res.data.articles,
+					status: 'success'
+				});
+				console.log(this.state);
+			});
 	}
 
 	getArticles = () => {
@@ -48,7 +66,7 @@ class Articles extends Component {
 			            <span className="date">
 			              <Moment locale="es" fromNow>{article.date}</Moment>
 			            </span>
-			            <a href="#">Leer más</a>
+			            <Link to={'/blog/articulo/'+article._id}>Leer más</Link>
 			            <div className="clearfix"></div>
 			        </article>
 				);
