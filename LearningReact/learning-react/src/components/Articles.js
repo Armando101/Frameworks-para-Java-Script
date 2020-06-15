@@ -16,12 +16,33 @@ class Articles extends Component {
 	}
 
 	componentWillMount() {
+		const search = this.props.search;
 		const home = this.props.home;
 		if (home === 'true') {
 			this.getLastArticles();
-		} else {
+		} else if (search && search !== null && search !== undefined) {
+			this.getArticlesBySearch(search);
+		}
+		else {
 			this.getArticles();
 		}
+	}
+
+	getArticlesBySearch = (buscar) => {
+		axios.get(`${this.url}/search/${buscar}`)
+			.then(res => {
+				this.setState({
+					articles: res.data.articles,
+					status: 'success'
+				});				
+			})
+			.catch( err => {
+				console.log(err.response.data);
+				this.setState({
+					articles: [],
+					status: 'success'
+				});		
+			})
 	}
 
 	getLastArticles = () => {
