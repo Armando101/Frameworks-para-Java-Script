@@ -16,7 +16,7 @@ class Formulario extends Component {
 	};
 
 	recibirFormulario = (event) => {
-		if (event.type == 'submit') {
+		if (event.type === 'submit') {
 			event.preventDefault(); // Esto es para que no recargue la pagina
 		}
 		

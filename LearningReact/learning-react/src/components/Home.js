@@ -15,7 +15,7 @@ class Home extends Component {
 			    />
 			    <div className="center">
 					<div id="content">
-						<h1 class="subheader">Ultimos articulos</h1>
+						<h1 className="subheader">Ultimos articulos</h1>
 					</div>
 					<Sidebar/>
 				</div>
