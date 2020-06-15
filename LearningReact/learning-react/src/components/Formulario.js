@@ -16,7 +16,9 @@ class Formulario extends Component {
 	};
 
 	recibirFormulario = (event) => {
-		event.preventDefault(); // Esto es para que no recargue la pagina
+		if (event.type == 'submit') {
+			event.preventDefault(); // Esto es para que no recargue la pagina
+		}
 		
 		let genero;
 		if (this.generoHombreRef.current.checked) {
