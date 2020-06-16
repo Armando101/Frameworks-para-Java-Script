@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import MyComponent from './components/MyComponent';
 import Peliculas from './components/Peliculas';
@@ -25,6 +25,12 @@ class Router extends Component {
 						<h1>Pagina Individual</h1>
 					)} />
 					<Route exact path="/blog/busqueda/:search" component={Search} />
+					<Route exact path="/redirect/:search" render={
+						(props) => {
+							let search = props.match.params.search;
+							return (<Redirect to={'/blog/busqueda/'+search}/>)
+						}
+					} />
 					<Route path="/formulario" component={Formulario} />
 					<Route path="/peliculas" component={Peliculas} />
 					
