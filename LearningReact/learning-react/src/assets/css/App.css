@@ -154,6 +154,19 @@ body {
   outline: none !important; -moz-outline-style: none !important;
 }
 
+.btn-danger {
+  background-color: rgb(201, 21, 21) !important;
+  color: white !important;
+  float: left;
+  margin: 20px;
+}
+
+.btn-warning {
+  background-color: rgb(25, 112, 149) !important;
+  color: white !important;
+  float: left;
+}
+
 #slider.slider-small {
   height: 150px;
 }
