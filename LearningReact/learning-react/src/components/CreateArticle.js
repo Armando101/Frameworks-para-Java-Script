@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import SimpleReactValidator from 'simple-react-validator';
 import Global from '../Global';
 
 import Sidebar from './Sidebar';
@@ -17,6 +18,14 @@ class CreateArticle extends Component {
 		status: null,
 		selectedFile: null
 	};
+
+	componentWillMount() {
+		this.validator = new SimpleReactValidator({
+			messages: {
+				required: 'Este campo es requerido'
+			}
+		});
+	}
 
 	changeState = () => {
 		this.setState({
@@ -37,6 +46,7 @@ class CreateArticle extends Component {
 		// console.log(this.contentRef.current.value);
 		
 		// Hacer petición post
+		if (this.validator.allValid()) {
 		axios.post(this.url + '/save', this.state.article)
 					.then(res => {
 						if (res.data.article) {
@@ -87,6 +97,13 @@ class CreateArticle extends Component {
 							});
 						}
 					});
+		} else {
+			this.validator.showMessages();
+			this.forceUpdate();
+			this.setState({
+					status: 'failed'
+			});
+		}
 	}
 
 	fileChange = (event) => {
@@ -113,11 +130,16 @@ class CreateArticle extends Component {
 						<div className='form-group'>
 							<label htmlFor='title'>Titulo</label>
 							<input type="text" name="title" ref={this.titleRef} onChange={this.changeState}/>
+
+							{/*{this.validator.message('title', this.state.article.title, 'required|alpha_num_space')}*/}
+							{this.validator.message('title', this.state.article.title, 'required')}
+
 						</div>
 
 						<div className='form-group'>
 							<label htmlFor='content'>Contenido</label>
 							<textarea name="content" ref={this.contentRef} onChange={this.changeState}></textarea>
+							{this.validator.message('content', this.state.article.title, 'required')}
 						</div>
 
 						<div className='form-group'>
