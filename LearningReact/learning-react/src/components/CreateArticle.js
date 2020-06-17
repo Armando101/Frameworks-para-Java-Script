@@ -7,6 +7,8 @@ import Sidebar from './Sidebar';
 
 class CreateArticle extends Component {
 
+	url = Global.url;
+
 	titleRef = React.createRef();
 	contentRef = React.createRef();
 
@@ -32,9 +34,29 @@ class CreateArticle extends Component {
 		this.changeState();
 		// console.log(this.titleRef.current.value);
 		// console.log(this.contentRef.current.value);
+		
+		// Hacer petición post
+		axios.post(this.url + '/save', this.state.article)
+					.then(res => {
+						if (res.data.article) {
+							this.setState({
+								article: res.data.article,
+								status: 'success'
+							})
+						} else {
+							this.setState({
+								status: 'failed'
+							});
+						}
+					});
 	}
 
 	render() {
+
+		if (this.state.status === 'success') {
+			return <Redirect to='/blog'/>
+		}
+
 		return(
 			<div className="center">
 				<section id="content">
