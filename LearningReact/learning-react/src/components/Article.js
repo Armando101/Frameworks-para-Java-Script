@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import swal from 'sweetalert';
 import Moment from 'react-moment';
 import 'moment/locale/es';
 import Global from '../Global';
@@ -38,7 +39,39 @@ class Article extends Component {
 			})
 	}
 
+	deleteArticle = (id) => {
+		swal({
+		  title: "¿Estás seguro que deseas eliminar?",
+		  text: "Una vez eliminado no podrás volver a ver este artículo",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {
+		    axios.delete(this.url + '/article/' + id)
+			.then(res => {
+				this.setState({
+					article: res.data.article,
+					status: 'deleted'
+				});
+			});
+			
+		    swal("Artículo eliminado correctamente", {
+		      icon: "success",
+		    });
+		  } else {
+		    swal("Tu artículo está a salvo");
+		  }
+		});
+	}
+
 	render() {
+
+		if (this.state.status === 'deleted') {
+			return <Redirect to='/blog'/>
+		}
+
 		const article = this.state.article;
 		return(
 			<div className="center">
@@ -63,8 +96,12 @@ class Article extends Component {
 			            <p>
 			              {article.content}
 			            </p>
-			            <Link to="/blog" className="btn btn-danger">Eliminar</Link>
-			            <Link to="/blog" className="btn btn-warning">Editar</Link>
+			            <button onClick={
+			            	() => {
+			            		this.deleteArticle(article._id)
+			            	}
+			            } className="btn btn-danger">Eliminar</button>
+			            <Link to={'/blog/editar/'+article._id} className="btn btn-warning">Editar</Link>
 			            <div className="clearfix"></div>
 			        </article>
 			      }

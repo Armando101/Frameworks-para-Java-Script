@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import SimpleReactValidator from 'simple-react-validator';
+import swal from 'sweetalert';
 import Global from '../Global';
 
 import Sidebar from './Sidebar';
@@ -55,6 +56,12 @@ class CreateArticle extends Component {
 								status: 'waiting'
 							});
 
+							swal(
+								'Artículo creado',
+								'El artículo ha sido creado',
+								'success'
+							);
+
 							// Upload image
 							if (this.state.selectedFile !== null) {
 								// Get id from the save article
@@ -96,6 +103,13 @@ class CreateArticle extends Component {
 								status: 'failed'
 							});
 						}
+					})
+					.catch(err => {
+						swal(
+								'Error al crear artículo',
+								'El artículo no ha sido creado',
+								'error'
+							);
 					});
 		} else {
 			this.validator.showMessages();
