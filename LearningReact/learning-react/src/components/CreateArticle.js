@@ -24,7 +24,7 @@ class CreateArticle extends Component {
 				content: this.contentRef.current.value
 			}
 		});
-		console.log(this.state);
+		//console.log(this.state);
 	}
 
 	saveArticle = (event) => {
