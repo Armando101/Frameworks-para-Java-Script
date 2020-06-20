@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PasswordPipe implements PipeTransform {
 
   transform(value: string, activated: boolean): string {
-    if (activated) {
+    return ((activated) ? '*'.repeat(value.length) : value);
+    /*if (activated) {
     	let pass = value.split('');
     	pass = pass.map((letter) => {
     		return '*';
@@ -14,6 +15,6 @@ export class PasswordPipe implements PipeTransform {
     	value = pass.join('');
     }
     return value;
+  	*/
   }
-
 }

@@ -43,8 +43,5 @@ export class AppComponent {
   cambiarIdioma(idioma:string) {
   	this.idioma = idioma;
   }
-
-  togglePassword() {
-  	this.activar ? this.activar=false : this.activar=true;
-  }
+  
 }
