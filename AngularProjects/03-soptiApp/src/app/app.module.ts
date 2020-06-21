@@ -10,6 +10,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ArtistaComponent } from './components/artista/artista.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { NoimagesPipe } from './pipes/noimages.pipe';
+import { TarjetasComponent } from './components/tarjetas/tarjetas.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NoimagesPipe } from './pipes/noimages.pipe';
     SearchComponent,
     ArtistaComponent,
     NavbarComponent,
-    NoimagesPipe
+    NoimagesPipe,
+    TarjetasComponent
   ],
   imports: [
     BrowserModule,
