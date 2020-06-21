@@ -11,6 +11,9 @@ export class HomeComponent implements OnInit {
 	public newSongs: any[];
   public loading: boolean;
 
+  public error:boolean = false;
+  public messageError:string;
+
   constructor(
   	private spotifyService:SpotifyService
   ) { 
@@ -23,7 +26,12 @@ export class HomeComponent implements OnInit {
   			// console.log(data.albums.items);
   			this.newSongs = data;
         this.loading = false;
-  		});
+  		}, (error)=> {
+        console.log(error);
+        this.error = true;
+        this.loading = false;
+        this.messageError = error.error.error.message;
+      });
   }
 
 }
