@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   Nos vamos a quick start y seguimos los pasos
   En settings configuramos las URL's
 
-  Allowed Callback URLs: http://localhost:4200/callback
+  Allowed Callback URLs: http://localhost:4200
   Allowed Logout URLs: http://localhost:4200
   Allowed Web Origins: http://localhost:4200
 
