@@ -58,7 +58,7 @@ export class AgregarPage implements OnInit {
 
   	this.deseosService.guardarStorage();
 
-  	console.log(this.lista);
+  	// console.log(this.lista);
   }
 
   borrar(index: number) {
