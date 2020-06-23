@@ -14,7 +14,7 @@ export class ListasComponent implements OnInit {
 
 	public listas: Lista[];
   constructor(
-  	private deseosService: DeseosService,
+  	public deseosService: DeseosService,
  	private router: Router
   ) { }
 
@@ -30,4 +30,7 @@ export class ListasComponent implements OnInit {
    	}
   }
 
+  borrarLista(lista: Lista) {
+  	this.deseosService.borrarLista(lista);
+  }
 }
