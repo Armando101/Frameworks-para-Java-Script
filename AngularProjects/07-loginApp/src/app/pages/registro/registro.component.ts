@@ -15,6 +15,8 @@ import swal from 'sweetalert';
 export class RegistroComponent implements OnInit {
 
 	private usuario: UsuarioModel;
+  public recordarUsuario = false;
+
 
   constructor(
   	private auth: AuthService,
@@ -58,6 +60,9 @@ export class RegistroComponent implements OnInit {
 						Docs: https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
   			 */
          swal.close();
+         if (this.recordarUsuario) {
+            localStorage.setItem('email', this.usuario.email);
+          }
          this.router.navigateByUrl('/home');
 
   		}, (err) => {
