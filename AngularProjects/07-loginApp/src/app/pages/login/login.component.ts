@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { UsuarioModel } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
+
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,8 @@ export class LoginComponent implements OnInit {
 	private usuario: UsuarioModel;
 
   constructor(
-  	private auth: AuthService
+  	private auth: AuthService,
+  	private router: Router
   ) { }
 
   ngOnInit() {
@@ -26,6 +31,13 @@ export class LoginComponent implements OnInit {
 	}  	
   	// console.log('Formulario válido');
   	
+  	swal({
+  		text: 'Espere porfavor...',
+  		icon: 'info'
+  	});
+
+  	/*swal.showLoading();*/
+
   	this.auth.login(this.usuario)
   		.subscribe(response => {
   			/*
@@ -44,8 +56,15 @@ export class LoginComponent implements OnInit {
 				Docs: https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
   			*/
   			console.log(response);
+  			swal.close();
+  			this.router.navigateByUrl('/home');
   		}, (err) => {
   			console.log(err.error.error.message);
+  			swal({
+		  		text: 'err.error.error.message',
+		  		title: 'Error al autenticar',
+		  		icon: 'error'
+		  	});
   		});
   }
 

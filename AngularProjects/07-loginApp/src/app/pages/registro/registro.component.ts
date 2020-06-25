@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { UsuarioModel } from '../../models/usuario.model';
 import { AuthService } from '../../services/auth.service';
+
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +17,8 @@ export class RegistroComponent implements OnInit {
 	private usuario: UsuarioModel;
 
   constructor(
-  	private auth: AuthService
+  	private auth: AuthService,
+    public router: Router
   ) { }
 
   ngOnInit() {
@@ -29,7 +33,15 @@ export class RegistroComponent implements OnInit {
   	// console.log('Formulario enviado');
   	// console.log(this.usuario);
   	// console.log(form); // En directives podemos ver los inputs del formulario al igual que en controls
-  	
+  	 
+    swal({
+      /*allowOutsideClick: false,*/
+      text: 'Espere porfavor...',
+      icon: 'info'
+    });
+
+    /*swal.showLoading();*/
+
   	this.auth.nuevoUsuario(this.usuario)
   		.subscribe(response => {
   			 console.log(response);
@@ -45,7 +57,16 @@ export class RegistroComponent implements OnInit {
 
 						Docs: https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
   			 */
+         swal.close();
+         this.router.navigateByUrl('/home');
+
   		}, (err) => {
+        swal({
+          text: 'err.error.error.message',
+          title: 'El usuario ya existe',
+          icon: 'error'
+        });
+
   			console.log(err.error.error.message);
   		});
   }
