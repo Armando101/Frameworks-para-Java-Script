@@ -1,6 +1,6 @@
 <h4>Formularios <small> template </small></h4>
 <hr>
-<form autocomplete="off">
+<form autocomplete="off" (ngSubmit)="guardar( myTemplateForm )" #myTemplateForm="ngForm">
 
   <div>
 
@@ -9,8 +9,15 @@
       <div class="col-8">
 
         <input class="form-control"
+        				[class.is-invalid]="nombre.invalid && nombre.touched"
                type="text"
-               placeholder="Nombre">
+               name="nombre" 
+               [ngModel]="usuario.nombre"
+               required
+               minlength="6"
+               placeholder="Nombre"
+               #nombre="ngModel">
+          <small *ngIf="nombre.invalid && nombre.touched" class="form-text text-danger">Ingrese minimo 5 letras</small>
       </div>
     </div>
 
@@ -20,7 +27,14 @@
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               placeholder="Apellido"
+               [class.is-invalid]="apellido.invalid && apellido.touched"
+               name="apellido"
+               required
+               minlength="6"
+               [ngModel]="usuario.apellido"
+               #apellido="ngModel">
+        <small *ngIf="apellido.invalid && apellido.touched" class="form-text text-danger">Ingrese minimo 5 letras</small>
       </div>
     </div>
 
@@ -32,7 +46,14 @@
 
       <input class="form-control"
              type="email"
-             placeholder="Correo electrónico">
+             placeholder="Correo electrónico"
+             name="correo"
+             [ngModel]="usuario.correo"
+             required
+             [class.is-invalid]="correo.invalid && correo.touched"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             #correo="ngModel">
+      <small *ngIf="correo.invalid && correo.touched" class="form-text text-danger">Ingrese un correo válido</small>
     </div>
   </div>
 
