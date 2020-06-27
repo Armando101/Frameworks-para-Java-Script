@@ -7,7 +7,7 @@ import { ReactiveComponent } from './pages/reactive/reactive.component';
 const routes: Routes = [
 	{ path: 'template', component: TemplateComponent },		
 	{ path: 'reactivo', component: ReactiveComponent },		
-	{ path: '**', redirectTo: 'template' }		
+	{ path: '**', redirectTo: 'reactivo' }		
 ];
 
 @NgModule({
