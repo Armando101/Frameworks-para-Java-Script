@@ -14,6 +14,7 @@ export class ReactiveComponent implements OnInit {
   	private fb: FormBuilder
   ) { 
   	this.crearFormulario();
+  	this.cargarData();
   }
 
   ngOnInit(): void {
@@ -71,6 +72,27 @@ export class ReactiveComponent implements OnInit {
 
   	// console.log(this.form);
   	console.log(this.form.value);
+
+  	// Posteo de informacion
+
+
+	  // Reset de campos
+	  this.form.reset({
+	  	nombre: 'Sin nombre'
+	  });
+  }
+
+  cargarData() {
+  	// this.form.setValue({ // setValue me pide todos los campos, de lo contrario marca error
+  	this.form.reset({	// Con reset podemos omitir campos
+		  nombre: "Armando",
+		  apellido: "Rivera",
+		  correo: "armando@rivera.com",
+		  direccion: {
+		    distrito: "Naucalpan",
+		    ciudad: "Mexico"
+		  }
+		});
   }
 
 }
