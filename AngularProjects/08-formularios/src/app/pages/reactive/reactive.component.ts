@@ -57,10 +57,16 @@ export class ReactiveComponent implements OnInit {
   			distrito: ['', Validators.required],
   			ciudad: ['', Validators.required]
   		}),
-  		pasatiempos: this.fb.array([
-  				[], [], [], []
-  		])
+  		pasatiempos: this.fb.array([])
   	});
+  }
+
+  agregarPasatiempo() {
+  	this.pasatiempos.push( this.fb.control('', Validators.required));
+  }
+
+  borrarPasatiempo(index:number) {
+  	this.pasatiempos.removeAt(index);
   }
 
   guardar() {
@@ -100,6 +106,9 @@ export class ReactiveComponent implements OnInit {
 		    ciudad: "Mexico"
 		  }
 		});
+  	
+  	['Comer', 'Dormir'].map(value => this.pasatiempos.push(this.fb.control(value)));
+
   }
 
 }
