@@ -31,6 +31,16 @@ export class ReactiveComponent implements OnInit {
   	return this.form.get('correo').invalid && this.form.get('correo').touched
   }
 
+  get distritoNoValido() {
+  	return this.form.get('direccion.distrito').invalid && this.form.get('direccion.distrito').touched
+  }
+
+  get ciudadNoValido() {
+  	return this.form.get('direccion.ciudad').invalid && this.form.get('direccion.ciudad').touched
+  }
+
+ 
+
   crearFormulario() {
   	this.form = this.fb.group({
   		// Definimos propiedades
@@ -38,6 +48,10 @@ export class ReactiveComponent implements OnInit {
   		nombre: ['', [Validators.required, Validators.minLength(5)]],
   		apellido: ['', Validators.required],
   		correo: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
+  		direccion: this.fb.group({
+  			distrito: ['', Validators.required],
+  			ciudad: ['', Validators.required]
+  		})
   	});
   }
 
@@ -47,6 +61,9 @@ export class ReactiveComponent implements OnInit {
   			if (control.status === "INVALID") {
 	  			// console.log(control);
 	  			control.markAsTouched();
+  			}
+  			if (control instanceof FormGroup) {
+  				Object.values(control.controls).map( control => control.markAsTouched());
   			}
   		});
   		return;
