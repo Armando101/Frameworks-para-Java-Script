@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
+import { ValidadoresService } from '../../services/validadores.service';
+
 @Component({
   selector: 'app-reactive',
   templateUrl: './reactive.component.html',
@@ -11,7 +13,8 @@ export class ReactiveComponent implements OnInit {
 	public form: FormGroup;
 
   constructor(
-  	private fb: FormBuilder
+  	private fb: FormBuilder,
+  	private validadores: ValidadoresService
   ) { 
   	this.crearFormulario();
   	this.cargarData();
@@ -51,7 +54,7 @@ export class ReactiveComponent implements OnInit {
   		// Definimos propiedades
   		// [Valor por defecto, validaciones sincoronos, validaciones asincronas]
   		nombre: ['', [Validators.required, Validators.minLength(5)]],
-  		apellido: ['', Validators.required],
+  		apellido: ['', [Validators.required, this.validadores.validador]],
   		correo: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
   		direccion: this.fb.group({
   			distrito: ['', Validators.required],
