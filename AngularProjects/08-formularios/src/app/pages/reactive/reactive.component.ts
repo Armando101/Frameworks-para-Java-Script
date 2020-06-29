@@ -18,6 +18,7 @@ export class ReactiveComponent implements OnInit {
   ) { 
   	this.crearFormulario();
   	this.cargarData();
+  	this.crearListeners();
   }
 
   ngOnInit(): void {
@@ -80,6 +81,18 @@ export class ReactiveComponent implements OnInit {
   	}, {
   		validators: this.validadores.passwordIguales('pass1', 'pass2')
   	});
+  }
+
+  crearListeners() {
+  	// Este bloque nos permite subscribirnos a un observable
+  	// Esto para ver en tiempo real el cambio de un input en el formulario
+  	/*this.form.valueChanges.subscribe(value => {
+  		console.log(value);
+  	});
+
+  	this.form.statusChanges.subscribe(status => console.log(status));*/
+
+  	this.form.get('nombre').valueChanges.subscribe(value => console.log(value));
   }
 
   agregarPasatiempo() {
