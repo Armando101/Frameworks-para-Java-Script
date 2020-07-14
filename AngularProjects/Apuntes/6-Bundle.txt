@@ -1,0 +1,93 @@
+¿Qué es un bundle size? Tree shaking y su importancia
+
+	Bundle size: ser refiere a cuanto pesa tu aplicación. Normalmente lo que hacemos es ejecutar la técnica lazy loading para modularizar el proyecto.
+
+	77% de los sitios móviles demorán 10 segundos en vargar una aplicación web.
+
+	Cuando entramos a una aplicación web lo que hace el navegador es:
+		- First request: lee el html
+		- Fetch resources: hace peticiones a css, js, imgages, etc.
+
+	JS realiza cuatro procesos:
+		- Decompress (Descargarlo): Esta es la parte que más tiempo tarda, podemos tener aplicaciones muy poderosas pero muy pesadas lo cual afecta a la experiencia de usuario.
+		- Parse (Parsear):
+		- Compile (Compilar):
+		- Render (Renderizar):
+
+	Tree shaking: quitar librerías y dependencias que no se están utilizando, en angular 8 se añade Ivy que permite que los empaquetadores quiten este código innecesario.
+
+**********************************************************************
+Implementando Webpack Bundle Analyzer
+	
+	Webpack Bundle Analyzer: es un plugin que nos da un reporte gráfico con los paquetes que pesan más y menos y saber si son necesarios o no.
+
+	Instalamos un complemento
+		- npm install webpack-bundle-analyzer --save-dev
+
+	Generamos una compilación para producción:
+		- ng build --prod --stats-json
+
+	Nos generará una carpeta dist la cuál será para producción, también tendremos un archivo stats-es.json.
+
+	Para ver el reporte corremos el siguente comando
+		- npx webpack-bundle-analyzer dist/APP_NAME/stats-es.json
+
+**********************************************************************
+Moment vs date-fns
+	
+	Bundlephobia nos permite saber el peso de las librerías y nos proporciona alternativas
+
+	Bundlephobia: https://bundlephobia.com
+
+	Si vemos la biblioteca moment veremos que tenemos como alterantiva date-fns
+
+	Instalamos date-fns
+		- npm install date-fns --save
+
+	Desinstalamos moment
+		- npm un moment --save
+
+	Ocupamos date-fns
+
+	import { addDays, format } form 'date-fns';
+
+	ngOnInit() {
+		const addNewDays = addDays(new Date(), 20);
+		this.date = format(addNewDays, 'yyyy/MMMM/dd');
+	}
+
+	Al hacer cambios en el código podemos volver a generar la app para producción y ver el reporte para ver los cambios en el tamaño
+
+		- ng build --prod --stats-json
+		- npx webpack-bundle-analyzer dist/APP_NAME/stats-es.json
+
+**********************************************************************
+Aplicando un Performance Budget desde el Angular CLI
+	
+	Angular Budget: Es una herramienta que nos provee Angular para colocar mínimos para cuando compilemos la app no pese más de esos límites.
+	Angular tiene límites por buenas prácticas.
+
+	Performance Budget Calculator: nos permite saber el tiempo de carga dependiendo el tamaño de nuestra app
+
+		https://perf-budget-calculator.firebaseapp.com/
+
+	En el archivo angular.json tenemos una parte que se llama "budgets" ahí se nos indica que si pesa más de cierto tamaño no nos dejará compilar. También se especifican los tamaños máximos por componente
+
+		"budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+        ]
+
+    En el package.json en la sección de scripts podemos colocar el comando para generar el reporte de bundle Analyzer, esto para evitar escribir este comando tan largo:
+
+    		- "scripts": {
+    			"analyzer": "webpack-bundle-analyzer dist/APP_NAME/stats-es.json"
+    		}

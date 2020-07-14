@@ -1,0 +1,123 @@
+
+Migrando de Angualar 7 a Angular 8	
+	
+	Angular tiene una herramienta para poder hacer correctamente una migración:
+	https://update.angular.io/
+
+	Seleccionamos Complejidad avanzada y si usamos Angular Material lo seleccionamos
+	Se mostrarán los pasos para actualizar
+
+	Comandos:
+		Actualizar el cliente de comandos gloabl
+			- sudo npm i -g @angular/cli@latest
+
+		Para verificarlo ejecutamos
+			- ng version
+
+		Para actualizar un proyecto nos posicionamos dentro de la carpeta y ejecutamos:
+			- ng update
+
+		Nos arrojará las instrucciones de actualización y los comandos
+
+		Si nos posicionamos en el package.json con VSCode junto a los paquetes nos mostrará las verisones más estables, sólo las actualizamos
+			- npm i @angular/cdk@8.1.4 @angular/material@8.1.4 --save
+
+¿Qué es Ivy?
+	
+	Es un motor de render.
+	Significa:
+		- Smaller: aplicaciones más pequeñas, reduce el bundle size de la aplicación
+		- Faster compilation: Hace que las aplicaciones sean más rápidas
+		- Dead-simple debugging: Debuggin maś controlado y exacto
+
+	El gran potencial de Ivy es que elimina código que no se utiliza en producción
+	Empaquetadores de angular pueden eliminar este código
+
+	Documentación:
+		https://angular.io/guide/ivy
+
+	En la versión 9 Ivy ya está habilidado
+
+	En el archivo tsconfig.app.json lo habilitamos:
+		"angularCompilerOptions": {
+    		"enableIvy": false
+  		}
+
+  	En el archivo angular.json en la parte de aot tiene que estar en true
+  		"configurations": {
+  			"aot": true
+  		}
+
+  	Ahora ya podemos hacer una compilación para producción
+  		- ng build --prod
+
+*****************************************************************
+Differential loading
+	
+	Es una de las características más importantes de Angular 8.
+	Se trata de bajar el peso de la aplicación, esto se logra quitando peso a los polyfills.
+	Polyfills: parches que se colocan en los navegadores cuando no están actualizados o no tienen las últimas API.
+	Desde Angualar 7 hacia atrás igual agrega este peso sin importar si el navegador es moderno o no.
+
+	Angular 8 nos permite que los navegadores modernos no tengan que cargar con este peso de polyfills
+
+	En el archivo tsconfig.json en la parte de target tiene que estar en "es2015" (ECMA script 2015) y modle en esnext
+		{	
+			"module": "esnext",
+			"target": "es2015"
+		}
+
+*****************************************************************
+Dynamic import
+	
+	Es un feature introducido en Angular 8, es una forma de precargar módulos directamente de JS.
+
+	La forma de precargar módulos en Angular 7 se hacía así:
+		{
+			patch: 'home',
+			loadChildren: './home/home.module#HomeModule'
+		}
+	De esta manera la importación la hacía Angular no JS
+
+	El cambio en Angular 8 es así:
+		{
+			patch: 'home',
+			loadChildren: ()=> import('./home/home.module').then(m => m.HomeModule)
+		}
+	Esto se hace con JS nativo y no con Angular, de esta manera hacemos que Angular trabaje menos.
+
+*****************************************************************
+CLI Builders
+	
+	Los Builders nos habilitan extender las funcionalidades del cliente de comandos, correr tareas y correrlas a nuestro modo.
+	Angular divide en tres categorías los comandos que ejecutamos en Angular CLI
+		- Modificaciones o crear código:
+			- ng new: crea el proyecto
+			- ng generate: genera componentes, módulos, pipes, etc
+			- ng add: agrega otras librerías
+			- ng update: actualiza
+
+		- Tareas simples:
+			- ng help
+			- ng version
+			- ng doc
+
+		- Architect, tareas complejas:
+			- ng serve: ejecuta el servidor de desarrollo
+			- ng build: compila la aplicación para producción
+			- ng test: corre pruebas
+			- ng lint: corre linter
+
+	Esta última categoría se le conoce como API de architect, es una API que angular abrió para que podamos modificar estas tareas complejas:
+		"architect": {
+			"build": { },
+			"serve": { },
+			"e2e": { },
+			"test": { },
+			"lint": { },
+			"extract-i18n": { },
+			"server": { },
+			"app-shell": { }
+		}
+
+	Existen builders para hacer deploy automaticamente a @angular/fire, @azure/ng-deploy, @zeit/ng-deploy. De esta manera sólo usamos estos builders ya creados por empresas como google microsoft o zeit y ya no nos toca a nosotros hacer esta arquitectura.

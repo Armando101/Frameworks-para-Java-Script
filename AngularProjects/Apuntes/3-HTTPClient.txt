@@ -1,0 +1,293 @@
+Evitando doble subscribe
+	
+	En el siguiente ejemplo tenemos un subscribe que hace llama al fetchProduct y este  a su vez ejecuta otro subscribe
+	
+	ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      const id = params.id;
+      this.fetchProduct(id);
+    });
+  }
+
+  fetchProduct(id: string) {
+    this.productsService.getProduct(id)
+    .subscribe(product => {
+      this.product = product;
+    });
+  }
+
+Importamos un switchMap
+	
+	import { switchMap } from 'rxjs/operators';
+	import { Observable } from 'rxjs';
+
+product$: Observable <Product>;
+ngOnInit(): void {
+    this.product$ = this.route.params
+    .pipe(
+    	switchMap((params: Params) => {
+    		return this.productsService.getProduct(params.id);
+    	})
+    );
+}
+
+En el template ya no usariamos product, usariamos product$, podemos colocar un alias
+
+	("product$ | async as product")
+
+***********************************************************
+Tipado en peticiones
+
+import { Map } from 'rxjs/operators';
+
+interface User {
+	email: string;
+	gender: string;
+	phone: string;
+}
+
+getRandomUser(): Observable<User[]> {
+	return this.http.get('https://randomuser.me/api/?results=2')
+	.pipe(
+		map((response: any) => response.results as User[])
+	);
+}
+
+getRandomUsers() {
+  this.products.getRandomUser()
+  .subscribe(users => {
+    console.log(users);
+  });
+}
+
+
+***********************************************************
+Manejo de errores
+
+Imaginemos que la siguiente función me manda un error debido a que la URL de getRandomUser es incorrecta.
+
+Separamos por coma e incluimos el tratamiento en dado caso que se presente un error
+
+getRandomUsers() {
+  this.products.getRandomUser()
+  .subscribe(
+    users => { // Todo salió bien
+      console.log(users);
+  },  //Hubo errores 
+    error => {
+      console.log(error);
+    }
+  );
+}
+
+
+Otra forma de hacerlo es manejar los errores dentro del servicio.
+
+Inlcuimos un catch directamente en el pipe, este tratamiento está más enfocado en el usuario
+
+import { Observable, throwError } from 'rxjs';
+import { HTTPClient, HttpErrorResponse } from '@angular/common/http';
+
+
+getRandomUser(): Observable<User[]> {
+  return this.http.get('https://randomuser.me/api/?results=2')
+  .pipe(
+    catchError(this.handleError),
+    map((response: any) => response.results as User[])
+  );
+}
+
+Este método nos ayudará a manejar los errores
+
+private handleError(error: HttpErrorResponse) {
+  console.log(error);
+  return throwError('Whoops!!, something wents wrong')
+}
+
+
+***********************************************************
+Manejo de errores con sentry
+
+Sentry es un proyecto open source que nos permite trackear errores, creamos una cuenta, un proyecto, seleccionamos la tecnología Angular y colocamos un nombre. Nos arrojará una configuración y un paquete a instalar sentryBrowser.
+  - npm i @sentry/browser --save
+
+Ahora lo inicializamos con la llave que nos arroja, la colocamos en el app.module, lo ideal es hacer esto en la fase de producción ya que en desarrollo no tiene mucho sentido trackear los errores.
+
+  import * as Sentry from '@sentry/browser';
+
+  enviroment.production nos arroja un booleano dependiendo si estamos en desarrollo o no.
+
+  Sentry.init({
+    dns: 'URL'
+  })
+
+  En el servicio también lo importamos. product.service.ts
+    import * as Sentry from '@sentry/browser';
+
+
+    private handleError(error: HttpErrorResponse) {
+      console.log(error);
+      Sentry.captureException(error);
+      return throwError('Whoops!!, something wents wrong')
+    }
+
+  Cuando se reporte un error lo podemos ver en la página de Sentry y podemos ver información sobre el error, nos dice desde que navegador y cuántos usuarios han tenido ese prblema, esto es útil para poder arreglar bugs.
+
+
+*************************************************************************
+Uso de retry() para reintentar una petición
+
+En el servicio importamos retry
+  import { retry } from 'rxjs/operators';
+
+  Inlcuimos la función retry dentro de pipe e indicamos cuántas veces queremos que vuelva a intentar hacer la petición, esto es útil ya que puede ser que haya un problema del servidor o de conexión pero se puede arreglar rápido, por esta razón lo volvemos a intentar, si después de ciertos intentos no funciona significa que hay un error más "fuerte" que no se arregla con volver a intentar hacerla petición
+
+  getRandomUser(): Observable<User[]> {
+    return this.http.get('https://randomuser.me/api/?results=2')
+    .pipe(
+      retry(3),
+      catchError(this.handleError),
+      map((response: any) => response.results as User[])
+    );
+  }
+
+************************
+  Vamos a solicitar un archivo desde nuestro servidor o desde una URL
+
+
+  En el sevicio ejecutamos
+
+  URL = url o dirección del archivo que quiero solicitar
+  URL = 'assets/files/text.txt'
+  getFllie() {
+    return this.http.get(URL, {responseType: 'text'});
+  }
+
+  En el componente
+
+  getfile() {
+    this.productsService.getFile()
+    .subscribe(content => {
+      console.log(content)
+    });
+  }
+
+  Esto sólo funciona para archivos de texto plano, si queremos otro tipo de archivos utilizamos la librería file-saver de npm
+
+*************************************************************************
+Creando un interceptor para Auth
+  
+  En el servicio de Auth
+
+  import { HTTPClient } from '@angular/common/http'
+  import { AngularFireAuth } from '@angular/fire/auth'
+
+  constructor(
+    private af: AngualarFireAuth,
+    private http: HTTPClient
+  ) {}
+
+  loginRestApi(email: string, password: string) {
+    return this.http.post('https://platzi'store.herokuapp.com/auth, {
+      email,
+      password
+    });
+  }
+
+
+  En el Componente login
+
+  loginApi() {
+    this.authService.loginRestApi('armando@rivera.com', '123456')
+    .subscribe(data => {
+      console.log(data);
+    })
+  }
+
+
+*************************************************************************
+Creando interceptores en http
+
+  Creamos servicio de token
+    - ng g core/services/token
+
+  Creamos el interceptor
+    - ng g s auth
+
+  Le cambiamos el nombre a:
+    - auth.interceptor.ts
+
+
+  En auth.interceptor.ts
+
+    import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
+    
+    import { Observable } from 'rxjs';
+
+    export class AuthInterceptor impplements HttpInterceptor {
+      constructor() {}
+
+      intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        request = this.addToken(request);
+        return next.handle(request);
+      }
+
+      private addToken(request: HttpRequest<any>) {
+        const token = '123';
+        if(true) {
+          request = request.clone({
+            setHeaders: {
+              toke,
+            },
+          });
+          return request;
+        }
+        return request;
+      }
+
+    }
+
+*************************************************************************
+Enviendo Token con interceptores
+  
+  En el servicio de token agregamos la función:
+
+    saveToken(token: string) {
+      localStorage.setItem('token', token);
+    }
+
+    getToken() {
+      return localStorage.getItem('token');
+    }
+
+  Donde vamos a utiliza el servicio del token, en este caso lo estamos utilizando dentro de otro servicio que se llama auth
+
+  loginRestApi(email: string, password: string) {
+    return this.http.post('https://platzi'store.herokuapp.com/auth, {
+      email,
+      password
+    })
+    .pipe(
+      tap(data: {token: string} => {
+        const token = data.token;
+        this.token.saveToken(token);
+      })
+    );
+  }
+
+
+  Ahora lo utilizaos en auth.interceptor
+
+  private addToken(request: HttpRequest<any>) {
+    const token = this.tokenService.getToken();
+    console.log(token)
+    if(token) {
+      request = request.clone({
+        setHeaders: {
+          token,
+        },
+      });
+      return request;
+    }
+    return request;
+  }

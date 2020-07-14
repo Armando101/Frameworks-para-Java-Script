@@ -1,0 +1,59 @@
+Patrón LIFT (Locate, Identify, Flat and Try DRY) y Naming
+
+LIFT:
+	Este patrón se encarga de definir cuatro reglas básicas para organizar nuestro proyecto.
+		- Locate: se trata de que podamos ubicar rápidamente un componente, lo que se propone es ubicar nuestro proyecto por características, no por lo que hacen. Ejemplo:
+			- About-us
+			- Contact
+			- footer
+			- header
+		Y dentro de estas carpetas ya tenemos sus respectivos pipes, directivas, etc.
+		Instalar plugins tsLint y Angular Language Service en VSCode
+
+		- Identify: reconocer el rol que cumple un archivo, le ponemos un "apellido al archivo". Ejemplo
+			- header.directive.ts
+			- header.model.ts
+			- header.pipe.ts
+			- header.service.ts
+
+		- Flat: mantener la estructura del proyecto muy plana, esto es evitar tener una carpeta dentro de otra y otra y así. La mejor práctica es tener máximo dos niveles de carpetas
+
+		- Try DRY: no repetir el mismo código para que el proyecto sea mantenible, si hay que cambiar algo evitas cambiar en todos los archivos sino sólo en uno
+
+
+Documentación: https://angular.io/guide/styleguide#t-dry-try-to-be-dry
+
+***********************************************************************
+Aplicando el patrón: Smart and Dumb components
+	
+	Este es un patrón que ayuda a separar conceptos en componentes.
+	Un componente en angualar sólo se ecarga de la parte visual e interactiva al usuario por medio de inputs u outputs.
+
+	El smart component hace fetch de el dato que queramos mandar al dumb.
+	A los smart components les llamaremos containers.
+
+	El container hace el fetch y se los manda al Dumb component para que lo renderize
+
+***********************************************************************
+Implementando Short imports con Typescript
+	
+	En el archivo tsconfig.json implementamos un atributo más hasta el final
+
+	"paths": {
+		"@core/*": ["src/app/core/*"],
+		"@material/*": ["src/app/material/*"],
+		"@shared/*": ["src/app/shared"/*],
+		"@admin/*": ["src/app/admin/*"]
+	}
+
+	Esto es una forma de añadir un alias para evitar importaciones como:
+		'../../../core/services/products/products.components'
+
+	Lo haríamos así:
+		core/services/products/products.components
+
+	Antes de agregar los paths tenemos que ver cuál es la url base:
+
+		"compiledOptions": {
+			"basedUrl": "src"
+		}

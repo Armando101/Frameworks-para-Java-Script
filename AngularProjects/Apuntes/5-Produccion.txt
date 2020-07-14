@@ -1,0 +1,93 @@
+Deploy con NGINX y Docker
+	
+	Docker: nos permite mover nuestra aplicación en contenedores y distribuirlos en servidores y en máquinas locales.
+
+	NGINX es un servidor de archivos estáticos, vamos a crear un contenedor con Docker dentro vamos a meter un servidor en NGINX.
+
+	Descargamos una imagen liviana de nginx con docker
+		- docker pull nginx:alpine 
+
+	Ahora corremos un contenedor con base en la imagen. -d: detach permite manejar la aplicación desde nuestra terminal no desde la del contenedor. -p: indicamos el puerto. :80 indica que quiero que se comunique con el puerto cpor defecto de nginx que es el 80. nginx:alpine: indico que genere un docker de esta imagen
+
+		- docker run -d -p 8080:80 nginx:alpine
+
+	Podemos ver que contenedores estamos corriendo
+		- docker ps
+
+	Generamos la aplicación de producción.
+		- ng build --prod
+
+	Nos genera un archiv de distrubución .dist
+
+	Detensos el contenedor con:
+	El PID: lo obtenemos a partir del comando docker ps
+		- docker stop PID
+
+	Volvemos a correr el contenedor:
+	Agregamos la bandera -v que significa volumen, indicamos la ruta absoluta de donde tomará la aplicación.
+	Separados por dos puntos indicamos a donde la vamos a enviar del servidor de nginx, esta ruta ya viene en usr como se indica en el comando.
+	Por último indicamos la imagen
+
+		- docker run -d -p 8080:80 -v ${pwd}/dist:usr/share/nginx/html nginx:alpine
+
+
+	Otra manera más simple de hacer lo anterior es la siguente:
+	Creamos un archivo llamado Dockerfile e incluimos lo siguiente:
+
+		// Imagen en la que se va a basar
+		// node:version
+		FROM node:12 as node
+
+		// Creamos un espacio de trabajo, normalmente la llamamos app
+		WORKDIR /app
+		COPY ./ /app
+		RUN npm install
+		RUN npm run build -- --prod
+
+		// Indicamos la versión de nginx
+		FROM nginx:alpine
+		COPY --from=node /app/dist/APP_NAME /usr/share/nginx/html
+
+
+	Creamos el docker
+		- docker build . -t tag_name_project
+
+	Por último corrermos el docker
+		- docker run -d -p 80:80
+
+******************************************************************
+AOT: Compilación de alto nivel
+	
+	En Angular tenemos dos tipos de compilación:
+		- Just in time
+		- AOT
+
+	Just in time: se utiliza en tiempo de desarrollo, esta técnica incluye el compilador de Angular a la app. Lo pasa a JS nativo y lo ejecuta el navegador.
+
+	Ahead Of Time: no trae el compilador de Angular sino que ya lo tiene precompilado para que el navegador lo entienda más fácil. Esta técnica sólo se ejecuta en producción, no se realiza en desarrollo ya que tardaría más tiempo y no tiene sentido precompilar la aplicación.
+
+	JS realiza 4 procesos:
+		- Download
+		- Parse
+		- Compile
+		- Execute
+
+	Performance: es un beneficio de AOT ya que el código ya viene precompilado.
+
+	Request: En just in time el componente hace un Request para obtener su respectivo css, con AOT al venir precompilado no hace este Request sino que ya viene "cahceado" como si tuviera un string con los estilos en el css.
+
+	Size: AOT no incluye el compilador de Angular, esto significa que la applicación es más ligera.
+
+	Errors: AOT nos permite una detección de errores a un tiempo temprano. No deja compilar si tenemos referencias a métodos que no existen.
+
+	Security: AOT deja todo el código lo más minimizado posible, si queremos ver los archivos js desde el navegador serán dificiles de entender.
+
+	En el archivo de angular.json debe tener la bandera "aot":true
+
+	Es una muy mala práctica mandar a producción sin Ahead of Time
+
+	Just in time:
+		ng serve
+
+	AOT:
+		ng build

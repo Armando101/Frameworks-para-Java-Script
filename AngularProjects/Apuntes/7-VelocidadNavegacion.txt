@@ -1,0 +1,248 @@
+Code splitting a nivel de rutas
+
+	Para optimizar las rutas importamos los módulos con JS
+		- import('./home/home.module').then(m => m.HomeModule)
+
+	También añadimos la opción de estrategía de precargado como PreloadAllModules
+		- preloadingStrategy: PreloadAllModules
+
+	const routes: Routes = [
+      {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+      }
+     ]
+
+	@NgModule({
+		imports: [RouterModule.forRoot(routes, {
+			preloadingStrategy: PreloadAllModules
+		})],
+	exports: [RouterModule]
+	})
+
+	Si tenemos muchos módlulos todos se van a precargar, esto es una buena práctica para pocos módulos pero si tenemos demasiados tenemos que agregar nuestra propia estrategia de precarga
+
+
+*******************************************************************
+Implementando una propia estrategia de precarga
+
+	Generamos un nuevo servicio
+		- ng s core/services/preload
+
+	Añadimos una bandera a los módulos que queremos que hagan precarga
+
+		{
+	        path: 'home',
+	        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+	        data: { preload: true }
+      	}
+
+    Dentro del servicio preload importamos PreloadingStrategy
+
+    import { PreloadingStrategy, Route } from '@angular/router';
+    import { Observable, of } from 'rxjs';
+
+    export class PreloadService implements PreloadingStrategy {
+    	preload(route: Route, load: () => Observable <any> {
+    		if(route.data && route.data['preload']) {
+    			return load();
+    		} else {
+    			return of()
+    		}
+    	})
+    }
+
+  En el app-routing importamos el servicio y en lugar de colocar PreloadAllModules colocamos PreloadService
+
+  @NgModule({
+		imports: [RouterModule.forRoot(routes, {
+			preloadingStrategy: PreloadService
+		})],
+	exports: [RouterModule]
+	})
+
+*******************************************************************
+Implementando QuicklinkStrategy
+	
+	Doc: https://github.com/mgechev/ngx-quicklink
+
+	Hasta el momento tenemos dos tipos de precargar:
+		- PreloadAllModules: nos permite cargar todos los módulos, representa un problema si nuestra aplicación tiene demasiados módulos.
+		- Precarga selectiva: nos permite cargar ciertos módulos, representa un problema cuando el usuario quiere cargar un componente que no indicamos que se precargara
+
+	Estos dos métodos son por parte del desarrolador.
+	La estrategia QuicklinkStrategy se basa en el usuario, usamos la API interception observer, detecta los links que entran al view port de la aplicación y precarga los componentes.
+
+	Si entra un link dentro del view port precarga el componente que se mostrará al dar click al link, de esta manera en cuanto demos click al link ya estará precargado.
+
+	Para esto usamos la libreria quick link, de esta manera sólo precargamos los módulos que le interesan al usuario y no todos o los que el desarrollador decide.
+
+	Instalamos Quicklink
+			- npm i ngx-quicklink --save
+
+	Ahora lo configuramos en la aplicación.
+	Lo importamos en el app.module
+
+			import { QuicklinkModule } from 'ngx-quicklink';
+
+	Se incluye este modulo en todos los módulos que tengan ruterlink, si tenemos una carpeta shared donde tenemos los componentes compartidos también lo incluimos ahí
+
+	En el app.routing.module incluimos la estrategia de precarga
+
+		import { QuicklinkStrategy } from 'ngx-quicklink';
+
+		@NgModule({
+			imports: [RouterModule.forRoot(routes, {
+				preloadingStrategy: QuicklinkStrategy
+			})],
+		exports: [RouterModule]
+		})
+
+*******************************************************************
+Usando Machine Learning para predecir rutas
+	
+	Las cadenas de Markov nos dicen la probabilidad de que el usuario vayan a una página o a la otra.
+
+	Por ejemplo, si tenemos tres páginas:
+		- Home
+		- Products
+		- Contact
+
+	Desde la página de Home hay un 80% de probabilidad de que el usuario vaya a products y un 20% de que vaya a contact.
+
+	Desde la página de Products hay una probabilidad de 30% de que regrese a Home y 70% de que vaya a contact.
+
+	Desde la página de Contact existe un 50% de probabilidad de ir a Home o a Products
+
+	También se puede representar con matrices, en páginas grandes podemos tener gráfos.
+
+	Esta técnica la desarrollo Megchev, desarrolló una librería llamada Guess.js que obtiene un modelo predictivo a partir de información de google analytics. Lo que hace es descargar los datos de google analytics, genera el modelo predictivo con tensor flow y una vez puesto en los assets precarga los módulos que tienen mayor predicción
+
+*******************************************************************
+Google Analytics y Angular
+	
+	Accedemos a google analytics y seguimos las indicaciones. Al final nos arrojará un código con el id de seguimiento dentro de una etiquta script que vamos a incluir el en index.html
+
+	En el app.component importamos el router
+
+	import { Router, NavigationEnd } from '@angular/router';
+	import { filter } from '@rxjs/operators';
+
+	export class AppComponent {
+		constructo(
+			private router: Router;
+		) {
+			const navEndEvents$ = this.router.events
+			.pipe(
+				filter(event => event instanceof NavigationEnd)
+			);
+
+			navEndEvents$.subscribe(event => {
+				gtag('config', 'UA-ID', {
+					page_path: event.urlAfterRedirects
+				});
+			})
+		}
+	}
+
+	Ahora google estará registrando los datos de los usuarios cuando navegan, de esta manera podemos tomar esa información y desarrollar un modelo con GuessJS
+
+***************************************************************************
+Implementando GuessJs
+	
+	Doc: https://github.com/guess-js/guess
+	Doc: https://guess-js.github.io/docs/angular
+
+	Instalamos las librerías
+
+		- npm i -D @angular-builders/custom-webpack @angular-devkit/build-angular
+
+	Ahora vamos al archivo angular.json y agregamos la configuración en el builder
+
+		"build": {
+	    	"builder": "@angular-builders/custom-webpack:browser"
+	    	"options": {
+	    		"customWebpackConfig": {
+	        		"path": "./extend.webpack.config.js"
+        		}
+      		}
+      	}
+
+
+    Creamos el archivo:
+    	- "./extend.webpack.config.js"
+
+    Instalamos:
+    	- npm i -D guess-webpack guess-parser
+
+    Obtenemos el ID que creamos en la cuenta de Google Analytics, este se encuenta el la parte de vistas, NO es el que está en propiedades y aplicaciones
+
+    En el archivo extend hacemos la configuración de exports
+
+		const { GuessPlugin } = require('guess-webpack');
+		const { parseRoutes } = require('guess-parser');
+
+		module.exports = {
+		  plugins: [
+		    new GuessPlugin({
+		      // Alternatively you can provide a Google Analytics View ID
+		      // Sustituimos las XXXX con el id de la cuenta
+		      GA: 'XXXXXX',
+		      
+		      /*
+		      reportProvider() {
+		        return Promise.resolve(JSON.parse(require('fs').readFileSync('./routes.json')));
+		      },
+		      */
+		      runtime: {
+		        delegate: false
+		      },
+		      routeProvider() {
+		        return parseRoutes('.');
+		      }
+		    })
+		  ]
+		};
+
+
+	Este método de precarga sólo funciona en producción.
+	Cuando compilemos para producción nos arrojará una pantalla de google para autorizar que nuestra aplicación use los datos de google analytics.
+
+
+***************************************************************************
+Precarga con Services workers
+	
+	Doc: https://angular.io/guide/service-worker-getting-started
+	Es otra forma de agregar performance.
+
+	Corremos el siguiente comando:
+		- ng add @angular/pwa --project *project-name*	
+
+	Me crea algunos archivos y actualiza otros.
+	Compilamos para producción.
+	Levantamos un servidor
+
+***************************************************************************
+¿Qué es Server Side Render?
+	
+	Doc: https://angular.io/guide/universal
+	Repositorio: https://github.com/angular/universal
+
+	SEO: Nos ayuda en el posicionamiento en motores de búsqueda.
+	Performance: El renderizado se hace desde el servidor no desde el usuario
+	First Page: Al hacer un render desde el Back la carga de la página inicial será más rápida.
+
+***************************************************************************
+Implementando Angular Universal
+
+	Se habilita con un paquete llamado universal, este comando realiza la configuración:
+		- ng add @nguniversal/express-engine
+
+
+	Para renderizar la aplicación ejecutamos:
+		- npm run dev:ssr
+		
+	Perdemos algunas funcionalidades que teníamos en el navegador como window, navigator, document.
+
+	Para poder utilizar estas variables seguimos las indicaciones de la documentación
+	https://github.com/angular/universal/blob/master/docs/gotchas.md

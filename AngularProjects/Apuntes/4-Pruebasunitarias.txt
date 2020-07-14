@@ -1,0 +1,111 @@
+Preparación de entorno de pruebas
+  
+  Karma es un test runner de código abierto, lo que hace es correr als pruebas, abre un navegador y ahí nos muestra las pruebas.
+
+  También tenemos Jasmine que es muy similar a Karma.
+
+  Otra herramienta es Protractor, es un framework para angular y hacer pruebas unitarias  
+
+  Karma: https://karma-runner.github.io/latest/index.html
+  Jasmine: https://jasmine.github.io/
+  cypress: https://www.cypress.io/
+
+  Los archivos .spec son los que se crean para realizar pruebas, para correr las pruebas ejecutamos el comando:
+    - ng test
+
+  Para que ingnore una prueba coloco una x antes de la función describe en los archivos spec, ej. xdescribe
+
+
+*********************************************************************
+Pruebas a providers y servicios HTTP
+  
+  La sección ARRANGE de un método de prueba unitaria inicializa los objetos y establece el valor de los datos que se pasan al método bajo prueba.
+
+  La sección ACT invoca el método bajo prueba con los parámetros organizados.
+
+  La sección ASERT verifica que la acción del método bajo prueba se comporta como se esperaba.
+
+  Vamos a trabajar en el archivo products.service.spec.ts
+
+  import { HTTPClientTestingModule, HttpTestingController, HttpClient }
+  from '@angular/common/http/testing';
+
+  describe('ProductsService', () => {
+    let httpClient: HttpClient;
+    let httpTestingController: HttpTestingController;
+    let service: ProductsService;
+
+    // Esta función se ejecuta antes de cada prueba
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [ HTTPClientTestingModule ]
+      })
+
+      httpClient = TestBed.get(httpClient);
+      httpTestingController = TestBed.get(HttpTestingController);
+      service = TestBed.get(ProductsService);
+    });
+
+    // Este método me indica que se debió haber creado el service
+    // Si se creó no habrá errores
+    it('should be created', ()=> {
+      expect(service).toBeTruthy();
+    });
+
+
+    // Vamos a definir más pruebas
+    // Defino el test para getAllProducts
+    describe('test for getAllProducts', ()=> {
+      
+      it('should return products', () => {
+        // arrange
+        const expectData = [
+          {
+            id: '1',
+            title: 'asas',
+            price: 1212,
+            description: 'asas',
+            image: 'img/img.jpg'
+          },
+          {
+            id: '2',
+            title: 'sdfdf',
+            price: 1212,
+            description: 'asas',
+            image: 'img/img.jpg'
+          }
+        ];
+        let dataError, dataResponse;
+        
+        // Act
+        service.getAllProducts()
+        .subscribe(response  ()=> {
+          dataResponse = response;
+        }, error => {
+          dataError = error
+        });
+
+        const req = httpTestingController.expectOne(${environment.url_api}/products`);
+        req.flush(expectData);
+
+        // assert
+        expect(dataResponse.length).toEqual(2);
+        expect(req.request.method).toEqual('GET');
+        expect(dataError).toBeUndefined();
+      });
+    });
+
+  });
+
+
+**************************************************************************
+Reporte con Coverage
+  
+  Este reporte nos indica qué código falta testear
+
+  --watch= false: indica que no voy a estar a la escuhca, es decir no volverá a correr el test al detectar cambios.
+  --codeCoverage: indica que genere un reporte
+
+    - ng test --watch=false --codeCoverage=true
+
+  Nos genera una carpeta con un html, so lo abrimos podemos ver el código al que no le hemos hecho pruebas
