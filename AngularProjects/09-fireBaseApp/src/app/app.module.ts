@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+
 import { HeroeComponent } from './pages/heroe/heroe.component';
 import { HeroesComponent } from './pages/heroes/heroes.component';
 import { RouterModule } from '@angular/router';
@@ -16,7 +18,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
