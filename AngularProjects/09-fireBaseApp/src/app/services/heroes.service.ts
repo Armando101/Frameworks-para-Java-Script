@@ -25,4 +25,16 @@ export class HeroesService {
       })
     );
   }
+
+  actualizarHeroe( heroe: HeroeModel ): Observable<object> {
+    // Creamos el objeto que vamos a mandar por put
+    const heroeTemp = {
+      ...heroe
+    };
+
+    // Eliminamos la propiedad Id ya que no queremos que esta se envie al backend
+    delete heroeTemp.id;
+
+    return this.http.put(`${this.url}/heroes/${heroe.id}.json`, heroeTemp);
+  }
 }

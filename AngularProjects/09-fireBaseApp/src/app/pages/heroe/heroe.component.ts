@@ -26,14 +26,21 @@ export class HeroeComponent implements OnInit {
       console.log('Formulario invalido');
       return;
     }
-    console.log(form);
-    console.log(this.heroe);
+    // console.log(form);
+    // console.log(this.heroe);
 
-    this.heroesService.crearHeroe(this.heroe)
+    if (this.heroe.id) {
+      this.heroesService.actualizarHeroe(this.heroe)
       .subscribe(response => {
         console.log(response);
       });
+    } else {
 
+      this.heroesService.crearHeroe(this.heroe)
+        .subscribe(response => {
+          console.log(response);
+        });
+    }
   }
 
 }
