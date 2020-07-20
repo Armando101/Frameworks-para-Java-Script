@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 export class HeroesComponent implements OnInit {
 
   public heroes: HeroeModel[] = [];
+  public cargando = true;
+
   constructor(
     private heroesService: HeroesService
   ) { }
@@ -21,6 +23,7 @@ export class HeroesComponent implements OnInit {
     .subscribe(response => {
       // console.log(response);  // Array de objetos
       this.heroes = response;
+      this.cargando = false;
     });
   }
 
