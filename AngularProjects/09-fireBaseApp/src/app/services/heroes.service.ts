@@ -60,4 +60,8 @@ export class HeroesService {
 
     return heroes;
   }
+
+  borrarHeroe(id: string): Observable<object> {
+    return this.http.delete(`${this.url}/heroes/${id}.json`);
+  }
 }
