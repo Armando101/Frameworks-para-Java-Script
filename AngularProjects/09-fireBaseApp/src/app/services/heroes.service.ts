@@ -38,6 +38,10 @@ export class HeroesService {
     return this.http.put(`${this.url}/heroes/${heroe.id}.json`, heroeTemp);
   }
 
+  getHeroe( id: string ): Observable<object> {
+    return this.http.get(`${this.url}/heroes/${id}.json`);
+  }
+
   getHeroes(): any {
     return this.http.get(`${this.url}/heroes.json`)
     .pipe(map(this.crearArreglo));
@@ -45,7 +49,7 @@ export class HeroesService {
 
   private crearArreglo(heroesObj: object): HeroeModel[] {
     const heroes: HeroeModel[] = [];
-    console.log(heroesObj);
+    // console.log(heroesObj);  // Obejto de objetos
     if ( heroesObj === null) { return []; }
 
     Object.keys(heroesObj).forEach(key => {
