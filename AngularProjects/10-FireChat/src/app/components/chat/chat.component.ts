@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit {
     .subscribe( () => {
       setTimeout( () => {
         this.elemento.scrollTop = this.elemento.scrollHeight;
-      }, 20)
+      }, 20);
     });
     this.elemento = document.getElementById('app-mensajes');
   }
