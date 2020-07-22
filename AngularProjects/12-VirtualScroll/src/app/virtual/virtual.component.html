@@ -1,0 +1,9 @@
+<h1>Virtual Scroll</h1>
+<hr>
+<!-- cdk-virtual-scroll-viewport para hacer el virtual scroll -->
+<!-- itemSize pixeles de altura por item -->
+<cdk-virtual-scroll-viewport class="list-container list-group" itemSize="50">
+	<div class="list-group-item" *cdkVirtualFor="let persona of personas; let i = index; let counteo = count">
+		Item {{ i }} / {{ counteo }}
+	</div>
+</cdk-virtual-scroll-viewport>
