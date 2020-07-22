@@ -5,14 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { LineaComponent } from './components/linea/linea.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LineaComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
