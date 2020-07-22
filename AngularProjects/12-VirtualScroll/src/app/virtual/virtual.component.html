@@ -1,5 +1,26 @@
 <h1>Virtual Scroll</h1>
 <hr>
+
+<div class="row">
+	<div class="col">
+		<button class="btn btn-primary" (click)="irInicio()">
+			Ir al Inicio
+		</button>
+	</div>
+	<div class="col text-center">
+		<button class="btn btn-warning" (click)="irMitad()">
+			Ir al la mitad
+		</button>
+	</div>
+	<div class="col text-right">
+		<button class="btn btn-secondary" (click)="irFinal()">
+			Ir al Final
+		</button>
+	</div>
+</div>
+
+<hr>
+
 <!-- cdk-virtual-scroll-viewport para hacer el virtual scroll -->
 <!-- itemSize pixeles de altura por item -->
 <cdk-virtual-scroll-viewport class="list-container list-group" itemSize="50">
