@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import HelloWorld from './components/HelloWorld';
+import Button from './components/Button';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <HelloWorld/>,
+  <Button text="Click me" text2="Click me please"/>,
   document.getElementById('root')
 );
 
