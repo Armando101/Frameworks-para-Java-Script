@@ -7,7 +7,7 @@ import Button from './components/Button';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <Button text="Click me" text2="Click me please"/>,
+  <Button/>,
   document.getElementById('root')
 );
 
