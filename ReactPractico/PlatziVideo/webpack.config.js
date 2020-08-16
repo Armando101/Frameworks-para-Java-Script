@@ -30,6 +30,17 @@ module.exports = {
 				]
 			},
 			{
+				test: /\.(png|gif|jpg)$/,
+				use: [
+					{
+						'loader': 'file-loader',
+						options: {
+							name: 'assets/[hash].[text]'
+						}
+					}
+				]
+			},
+			{
 				test: /\.(s*)css$/,
 				use: [
 					{
