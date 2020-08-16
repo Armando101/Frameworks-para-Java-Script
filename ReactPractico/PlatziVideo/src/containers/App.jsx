@@ -8,51 +8,33 @@ import Footer from '../components/Footer';
 import '../assets/styles/App.scss';
 
 const App = () => {
-	const API = 'http://localhost:3000/initalState';
+	const [ videos, setVideos ] = useState({ mylist:[], trends:[], originals: []}); 
 
-	// Manejo el estado de mis videos con useState, en un principio videos es un array vacio
-	const [ videos, setVideos ] = useState([]); 
-
-	// useEffect es un hook que permite ejecutar codigo cuando se monta, desmonta o actualiza nuestro componente
-	// El primer arguamento es una funcion que se ejecuta cuando React monte o actualice el componente, esta funcion puede devolver otra funcion que se ejecutara cuando el componente se desmonte
-
-	// El segundo argumento es un array que indica las propiedades que se deben cambiar para que React ejecute la funcion.
-	// Si el omponente se actualiza pero las variables no cambiar, la funcion no se ejecuta
-	// Si mandamos un array vacio la funcion se ejecutara al montar o desmontar el componente
 	useEffect(() => {
-		fetch(API)
+		fetch('http://localhost:3000/initalState')
 		.then(response => response.json())
 		.then(data => setVideos(data));
 	}, []);
-
-	console.log(videos);
 
 	return (
 		<div className="App">
 			<Header/>
 			<Search/>
 
-			<Categories title="Mi lista">
-				<Carousel>
-					<CarouselItem/>
-					<CarouselItem/>
-					<CarouselItem/>
-					<CarouselItem/>
-				</Carousel>
-			</Categories>
+			{videos.mylist.length > 0 && 
+
+            <Categories title="Mi lista">
+                <Carousel>
+                    <CarouselItem/>                                                                      
+                </Carousel>
+            </Categories>
+            }
 
 			<Categories title="Tendencias">
 				<Carousel>
-					<CarouselItem/>
-					<CarouselItem/>
-				</Carousel>
-			</Categories>
-
-			<Categories title="Originales">
-				<Carousel>
-					<CarouselItem/>
-					<CarouselItem/>
-					<CarouselItem/>
+					{
+						videos.trends.map(item => <CarouselItem key={item.id} {...item}/>)
+					}
 				</Carousel>
 			</Categories>
 
@@ -60,6 +42,6 @@ const App = () => {
 
 		</div>
 	)
-}
+};
 
 export default App;
