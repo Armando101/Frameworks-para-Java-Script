@@ -24,9 +24,9 @@ const App = () => {
 
 			{
 
-				keys.map(key => {
+				keys.map((key, index) => {
 					return initialState[key].length > 0 && ( 
-						<Categories title={key}>
+						<Categories key={index} title={key}>
                 <Carousel>
 										{
                     initialState[key].map(item => <CarouselItem key={item.id} {...item}/>)}             
