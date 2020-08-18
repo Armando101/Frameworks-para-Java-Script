@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-grafico-sidebar',
   templateUrl: './grafico-sidebar.component.html',
   styleUrls: ['./grafico-sidebar.component.css']
 })
-export class GraficoSidebarComponent {
+export class GraficoSidebarComponent implements OnDestroy {
 
   resultados: any[] = [
     {
@@ -38,9 +38,29 @@ export class GraficoSidebarComponent {
 
   colorScheme = 'nightLights';
 
-  constructor() {}
+  private intervalo;
+
+  constructor() {
+
+    this.intervalo = setInterval(()=> {
+      console.log('works')
+      const newResults = [...this.resultados];
+
+      for (const i in this.resultados) {
+        newResults[i].value = Math.round(Math.random() * 500);
+      }
+
+      this.resultados = [...newResults];
+
+    }, 1500);
+
+  }
 
   onSelect(event) {
     console.log(event);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalo);
   }
 }
