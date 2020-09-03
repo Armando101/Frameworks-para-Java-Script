@@ -54,4 +54,27 @@ app.get('/goty', async (req, res) => {
    );
 });
 
+app.post('/goty', async(req, res) => {
+	const id = req.params.id;
+	const gameRef = db.collection('goty').doc(id);
+	const gameSnap = await gameRef.get();
+
+	if (!gameSnap.exists) {
+		res.status(404).json({
+			error: true,
+			message: 'Invalid ID' + id
+		});
+	} else {
+		const currentGame = gameSnap.data() || {votos: 0};
+		await gameRef.update({
+			votos: currentGame.votos + 1
+		})
+		res.status(200).json({
+			error: false,
+			message: `Gracias por tu voto por ${currentGame.nombre}`
+		});
+	}
+
+});
+
 export const api = functions.https.onRequest(app);
