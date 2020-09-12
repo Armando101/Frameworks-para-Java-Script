@@ -1,32 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
-import useInitialState from '../hooks/useInitialState';
 
 import '../assets/styles/App.scss';
 
-const API = 'http://localhost:3000/initalState';
-
-const Home = () => {
-  const initialState = useInitialState(API);
-
-  const keys = Object.keys(initialState);
-
-  return initialState.length === 0 ? (
-    <h1>Loading...</h1>
-  ) : (
+const Home = ({ myList, trends, originals }) => {
+  return (
     <>
       <Search />
 
-      {keys.map((key, index) => {
+      {myList.map((key, index) => {
         return (
-          initialState[key].length > 0 && (
+          myList.length > 0 && (
             // eslint-disable-next-line react/no-array-index-key
             <Categories key={index} title={key}>
               <Carousel>
-                {initialState[key].map((item) => (
+                {myList.map((item) => (
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   <CarouselItem key={item.id} {...item} />
                 ))}
@@ -39,4 +31,13 @@ const Home = () => {
   );
 };
 
-export default Home;
+// export default Home;
+// export default connect(props, actions)(Home);
+const mapStateToProps = (state) => {
+  return {
+    myLsit: state.myLsit,
+    trends: state.trends,
+    originals: state.originals,
+  };
+};
+export default connect(mapStateToProps, null)(Home);
