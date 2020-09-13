@@ -6,12 +6,14 @@ import { environment } from '../environments/environment.prod';
 
 // Sockets
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { FooterComponent } from './componets/footer/footer.component';
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
