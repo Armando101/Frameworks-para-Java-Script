@@ -2,6 +2,7 @@ import express from 'express';
 import socketIO from 'socket.io';
 import http from 'http';
 import { SERVER_PORT } from '../global/environments';
+import * as socket from '../sockets/socket';
 
 export default class Server {
     private static _instance: Server;
@@ -29,7 +30,12 @@ export default class Server {
 
     private listenSocket() {
         console.log('Listening sockets');
-        this.io.on('connection', client => console.log('New client connected'));
+        this.io.on('connection', client => {
+        	console.log('New client connected');
+
+        	// Detectamos si el cliente se desconecta
+        	socket.disconnect(client);
+        });
     }
 
     start(callback: VoidFunction) {
