@@ -43,5 +43,23 @@ router.post('/messages/:id', (req: Request, res: Response) => {
     });
 });
 
+// Servicio apra obtener id de los usuarios
+router.get('/usuarios', (req: Request, res: Response) => {
+    const server = Server.getInstance();
+
+    server.io.clients((err: any, clients: string[]) => {
+        if (err) {
+            res.json({
+                ok: false,
+                err
+            })
+        }
+
+        res.json({
+            ok: true,
+            clients
+        })
+    });
+});
 
 export default router;
