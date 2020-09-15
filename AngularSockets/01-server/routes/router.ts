@@ -5,6 +5,17 @@ const router = Router();
 
 router.get('/messages', (req: Request, res: Response) => {
 
+    const from = req.body.from;
+    const message = req.body.message;
+
+    const payload = {
+        from,
+        message 
+    };
+
+    const server = Server.getInstance();
+    server.io.emit('new-message', payload);
+
     res.json({
         ok: true,
         message: 'Everything is ok'
@@ -13,12 +24,12 @@ router.get('/messages', (req: Request, res: Response) => {
 
 router.post('/messages/:id', (req: Request, res: Response) => {
 
-    const title = req.body.title;
+    const from = req.body.from;
     const message = req.body.message;
     const id = req.params.id;
 
     const payload = {
-        title,
+        from,
         message 
     };
 
@@ -27,7 +38,7 @@ router.post('/messages/:id', (req: Request, res: Response) => {
 
     res.json({
         ok: true,
-        title,
+        from,
         message
     });
 });
