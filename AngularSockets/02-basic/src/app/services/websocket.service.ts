@@ -24,6 +24,11 @@ export class WebsocketService {
       console.log('Desconectado al servidor');
       this.socketStatus = false;
     });
+  }
+
+  emit(event: string, payload?: any, callback?: () => void): void {
+
+    this.socket.emit(event, payload, callback);
 
   }
 }

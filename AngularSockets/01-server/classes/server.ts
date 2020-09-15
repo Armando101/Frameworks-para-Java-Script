@@ -33,6 +33,9 @@ export default class Server {
         this.io.on('connection', client => {
         	console.log('New client connected');
 
+            // Recibimos mensajes
+            socket.message(client);
+
         	// Detectamos si el cliente se desconecta
         	socket.disconnect(client);
         });
