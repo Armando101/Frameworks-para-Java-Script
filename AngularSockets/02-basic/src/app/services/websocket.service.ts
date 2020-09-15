@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 export class WebsocketService {
 
   public socketStatus = false;
+  public user: User;
 
   constructor(
     private socket: Socket
@@ -35,5 +37,10 @@ export class WebsocketService {
 
   listen(event: string): Observable<unknown> {
     return this.socket.fromEvent(event);
+  }
+
+  loginWS(name: string): void {
+    console.log('configurando user: ', name);
+    this.emit('config-user', { name }, console.log);
   }
 }
