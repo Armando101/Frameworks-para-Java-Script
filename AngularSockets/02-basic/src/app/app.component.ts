@@ -1,20 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { WebsocketService } from './services/websocket.service';
-import { ChatService } from './services/chat.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  constructor(
-    public wsService: WebsocketService,
-    private chatService: ChatService
-  ) {}
-
-  ngOnInit(): void {
-    this.chatService.sendMessage('Hello world');
-  }
+  constructor() {}
 }
