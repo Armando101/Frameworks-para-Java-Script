@@ -34,7 +34,7 @@ export default class Server {
         	console.log('New client connected');
 
             // Recibimos mensajes
-            socket.message(client);
+            socket.message(client, this.io);
 
         	// Detectamos si el cliente se desconecta
         	socket.disconnect(client);
