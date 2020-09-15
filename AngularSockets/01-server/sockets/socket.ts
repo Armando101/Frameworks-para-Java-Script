@@ -1,8 +1,22 @@
 import { Socket } from 'socket.io';
 import SocketIO from 'socket.io';
+import { UserList } from '../classes/user-list';
+import { User } from '../classes/user';
+
+export const usersConnected = new UserList();
+
+export const connectClient = (client: Socket) => {
+	const user = new User(client.id);
+	usersConnected.add(user);
+
+}
 
 export const disconnect = (client: Socket) => {
-	client.on('disconnect', () => console.log('Client disconnected'));
+	client.on('disconnect', () => {
+		usersConnected.deleteUser(client.id);
+		console.log(usersConnected.getList());
+		console.log('Client disconnected');
+	});
 }
 
 // Listen messages
@@ -16,8 +30,10 @@ export const message = (client: Socket, io: SocketIO.Server) => {
 
 // Configurar usuario
 export const configUser = (client: Socket, io: SocketIO.Server) => {
-	client.on('config-user', (user: { name: string}, callback: Function ) => { 
+	client.on('config-user', (user: { name: string}, callback: Function ) => {
+		usersConnected.updateName(client.id, user.name);
 		console.log(user.name, ' configurado')
+		console.log(usersConnected.getList());
 		callback({
 			ok: true,
 			message: `User ${user.name}, configurado`
