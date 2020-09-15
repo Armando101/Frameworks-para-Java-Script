@@ -61,7 +61,10 @@ export class WebsocketService {
 
   loadStorage(): void {
     const user: string = localStorage.getItem('user');
-    // tslint:disable-next-line: no-unused-expression
-    user && (this.user = JSON.parse(user));
+
+    if (user) {
+      this.user = JSON.parse(user);
+      this.loginWS(this.user.name);
+    }
   }
 }
