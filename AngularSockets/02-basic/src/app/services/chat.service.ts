@@ -23,4 +23,8 @@ export class ChatService {
     // Escucho todos los eventos de tipo new-message que vengan del servidor
     return this.wsService.listen('new-message');
   }
+
+  getMessagesPrivate(): Observable<unknown> {
+    return this.wsService.listen('private-message');
+  }
 }
