@@ -20,7 +20,7 @@ export class UserList {
 
 	// Get users list
 	public getList(): User[] {
-		return this.list;
+		return this.list.filter(user => user.name !== 'none');
 	}
 
 	public getUser(id: string): User | undefined {
