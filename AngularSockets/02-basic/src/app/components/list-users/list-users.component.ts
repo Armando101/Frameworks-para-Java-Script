@@ -19,7 +19,7 @@ export class ListUsersComponent implements OnInit {
     this.activeUsers$ = this.chat.getActiveUsers();
 
     // Emitir obtener users
-    this.chat.getUsers();
+    this.chat.emitUsers();
   }
 
 }

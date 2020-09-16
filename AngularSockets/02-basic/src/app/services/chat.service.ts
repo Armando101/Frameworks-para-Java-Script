@@ -32,7 +32,7 @@ export class ChatService {
     return this.wsService.listen('active-users');
   }
 
-  getUsers(): Observable<unknown> {
-    return this.wsService.listen('get-users');
+  emitUsers(): void {
+    this.wsService.emit('get-users');
   }
 }
