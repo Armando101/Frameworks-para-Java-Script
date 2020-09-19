@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraficaComponent } from './components/grafica/grafica.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000'};
 
@@ -19,6 +20,7 @@ const config: SocketIoConfig = { url: 'http://localhost:5000'};
     ChartsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [],

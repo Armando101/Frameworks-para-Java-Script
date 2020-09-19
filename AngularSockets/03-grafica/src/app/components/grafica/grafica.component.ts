@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { HttpClient } from '@angular/common/http';
+import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-grafica',
@@ -15,24 +17,27 @@ export class GraficaComponent implements OnInit {
   public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    public wsService: WebsocketService
+  ) { }
 
   ngOnInit(): void {
-    setInterval(() => {
-      const newData = [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-      ];
-      this.lineChartData = [{
-        data: newData,
-        label: 'Ventas'
-      }];
-    }, 3000);
+    this.getData();
+    this.listensocket();
+  }
+
+  getData(): void {
+    this.http.get('http://localhost:5000/grafica').subscribe((data: any) => {
+      this.lineChartData = data;
+    });
+  }
+
+  listensocket(): void {
+    this.wsService.listen('change-graphic').subscribe((data: any) => {
+      console.log('socket ', data);
+      this.lineChartData = data;
+    });
   }
 
 }

@@ -1,10 +1,29 @@
 import { Router, Request, Response } from 'express';
 import Server from '../classes/server';
 import { usersConnected } from '../sockets/socket';
+import { GraficaData } from '../classes/grafica';
 
 const router = Router();
 
-router.get('/messages', (req: Request, res: Response) => {
+const graphic = new GraficaData();
+
+router.get('/grafica', (req: Request, res: Response) => {
+    res.json(graphic.getDataGraphic());
+});
+
+router.post('/grafica', (req: Request, res: Response) => {
+
+    const month = req.body.month;
+    const units = Number(req.body.units);
+    graphic.incremetnValue(month, units);
+
+    const server = Server.getInstance();
+    server.io.emit('change-graphic', graphic.getDataGraphic());
+
+    res.json(graphic.getDataGraphic());
+});
+
+router.post('/messages', (req: Request, res: Response) => {
 
     const from = req.body.from;
     const message = req.body.message;
