@@ -6,12 +6,14 @@ import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GraficaComponent } from './components/grafica/grafica.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000'};
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GraficaComponent
   ],
   imports: [
     ChartsModule,
