@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
 @Component({
@@ -9,7 +9,7 @@ import { Label } from 'ng2-charts';
 })
 export class GraficaComponent implements OnInit {
 
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: Label[] = ['Pregunta 1', 'Pregunta 2', 'Pregunta 3', 'Pregunta 4'];
   public barChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }
   ];
