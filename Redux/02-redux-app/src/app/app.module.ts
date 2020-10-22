@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// NGRX
+import { StoreModule } from '@ngrx/store';
+import { contadorReducer } from './contador/contador.reducer';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HijoComponent } from './contador/hijo/hijo.component';
@@ -14,7 +18,9 @@ import { NietoComponent } from './contador/nieto/nieto.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    // ForRoot indica que sera de manera global
+    StoreModule.forRoot({ count: contadorReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]
