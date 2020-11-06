@@ -19,10 +19,17 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.store.subscribe(state => {
-      console.log(state);
-      this.contador = state.count;
+
+    // Podemos seleccionar un valor en particular
+    this.store.select('count').subscribe(count => {
+      console.log(count);
+      this.contador = count;
     });
+
+    // this.store.subscribe(state => {
+    //   console.log(state);
+    //   this.contador = state.count;
+    // });
   }
 
   incrementar(): void {
