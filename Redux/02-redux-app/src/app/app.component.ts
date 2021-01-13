@@ -1,42 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as actions from './contador/contador.actions';
-
-interface AppState {
-  count: number;
-}
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  public contador: number;
-
-  constructor(private store: Store<AppState>) {
-    this.contador = 10;
-  }
-
-  ngOnInit(): void {
-
-    // Podemos seleccionar un valor en particular
-    this.store.select('count').subscribe(count => {
-      console.log(count);
-      this.contador = count;
-    });
-
-    // this.store.subscribe(state => {
-    //   console.log(state);
-    //   this.contador = state.count;
-    // });
-  }
-
-  incrementar(): void {
-    this.store.dispatch(actions.increment());
-  }
-
-  decrementar(): void {
-    this.store.dispatch(actions.decrement());
-  }
+export class AppComponent {
+  title = 'redux-app';
 }
