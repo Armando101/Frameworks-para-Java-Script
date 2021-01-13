@@ -7,3 +7,9 @@
     <button (click)="dividir()" class="btn btn-info">Dividir</button>
   </div>
 </div>
+
+<div class="row text-center">
+  <div class="col">
+    <app-nieto (resetEvent)="reset($event)" [contador]="contador"></app-nieto>
+  </div>
+</div>
