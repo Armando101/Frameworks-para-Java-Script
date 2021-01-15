@@ -4,3 +4,8 @@ export const crear = createAction(
   '[TODO] Crear todo',
   props<{ text: string }>()
 );
+
+export const toggle = createAction(
+  '[TODO] Toggle Todo',
+  props<{ id: number }>()
+);
