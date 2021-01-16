@@ -1,4 +1,5 @@
-import { Action, createReducer, on, State } from "@ngrx/store";
+import { state } from "@angular/animations";
+import { Action, createReducer, on } from "@ngrx/store";
 import { setFiltro, filtrosValidos } from "./filtro.actions";
 
 export const initialState: filtrosValidos = 'todos';
