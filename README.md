@@ -1,6 +1,3 @@
-# Frameworks para Java Script
+# Aprendiendo Angular
 
-Frameworks para JS:  
-* Angular  
-* React 
-* Vue
+Material con ejercicios y proyectos para Angular
