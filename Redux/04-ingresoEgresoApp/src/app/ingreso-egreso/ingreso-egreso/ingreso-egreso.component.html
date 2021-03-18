@@ -30,11 +30,18 @@
           </div>
 
           <hr>
-          <button type="submit" class="btn btn-success mr-2"
+          <button *ngIf="!loading" type="submit" class="btn btn-success mr-2"
             [disabled]=ingresoForm.invalid>
             <i class="fa fa-save"></i>
             Agregar
           </button>
+          
+          <button *ngIf="loading" type="button" class="btn btn-success mr-2"
+            [disabled]=true>
+            <i class="fa fa-spin fa-sync"></i>
+            Agregando...
+          </button>
+          
 
           <!-- 
                 <button disabled class="btn btn-success mr-2">
