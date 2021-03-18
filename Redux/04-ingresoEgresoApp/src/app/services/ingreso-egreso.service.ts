@@ -23,7 +23,7 @@ export class IngresoEgresoService {
   }
 
   initIngresosEgresosListener(uid: string) {
-    this.firestore
+    return this.firestore
       .collection(`${uid}/ingreso-egreso/items`)
       .snapshotChanges()
       .pipe(
@@ -36,9 +36,6 @@ export class IngresoEgresoService {
             };
           });
         })
-      )
-      .subscribe((item) => {
-        console.log(item);
-      });
+      );
   }
 }
