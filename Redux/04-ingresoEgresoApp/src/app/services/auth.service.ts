@@ -10,6 +10,7 @@ import { AppState } from '../app.reducer';
 import { Usuario } from '../models/usuario.model';
 import * as authActions from '../auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { unSetItems } from '../ingreso-egreso/ingreso-egreso.actions';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,6 +34,7 @@ export class AuthService {
         this.userSubscription.unsubscribe();
         this.store.dispatch(authActions.unSetUser());
         this._user = null;
+        this.store.dispatch(unSetItems());
         return;
       }
 
