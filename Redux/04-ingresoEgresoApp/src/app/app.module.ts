@@ -24,6 +24,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { environment } from 'src/environments/environment';
 import { appReducers } from './app.reducer';
+import { OrdenIngresoPipe } from './pies/orden-ingreso.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { appReducers } from './app.reducer';
     DetalleComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrdenIngresoPipe
   ],
   imports: [
     BrowserModule,
