@@ -29,7 +29,10 @@ export class EstadisticaComponent implements OnInit {
   }
 
   generarEstadistica(items: IngresoEgreso[]) {
-    console.log(items);
+    this.totalEgresos = 0;
+    this.totalIngresos = 0;
+    this.ingresos = 0;
+    this.egresos = 0;
     for (const item of items) {
       if (item.tipo === 'ingreso') {
         this.totalIngresos += item.monto;
