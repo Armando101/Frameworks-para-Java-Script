@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 // NgRx
-import { StoreModule } from "@ngrx/store";
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // Firebase
@@ -10,7 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -25,6 +25,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { environment } from 'src/environments/environment';
 import { appReducers } from './app.reducer';
 import { OrdenIngresoPipe } from './pies/orden-ingreso.pipe';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -38,11 +39,12 @@ import { OrdenIngresoPipe } from './pies/orden-ingreso.pipe';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    OrdenIngresoPipe
+    OrdenIngresoPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ChartsModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
@@ -54,6 +56,6 @@ import { OrdenIngresoPipe } from './pies/orden-ingreso.pipe';
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
